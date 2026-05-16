@@ -1,0 +1,16 @@
+[
+  {
+    "question": "What key features are integrated into the FinSight AI platform to support its Financial Retrieval-Augmented Generation capabilities?",
+    "expected_chunk_id": "7202922d-7d6c-88e6-bd59-46561dc03166",
+    "file_id": "document_md",
+    "project_id": "eval_demo_project",
+    "content_preview": "# FinSight AI: Advanced System Architecture & Documentation\n\nFinSight AI is an enterprise-grade Financial Retrieval-Augmented Generation (RAG) platform designed to handle complex financial documents w..."
+  },
+  {
+    "question": "What specific metrics are tracked under Retrieval Metrics in the automated RAG evaluation process?",
+    "expected_chunk_id": "f1686d2e-a4cd-895a-ea58-ac7cc886677e",
+    "file_id": "document_md",
+    "project_id": "eval_demo_project",
+    "content_preview": "D. Automated RAG Evaluation\nA built-in benchmarking suite ensures continuous quality:\n- **LLM-as-a-Judge**: Uses Llama-3.3 (via Groq) to evaluate **Faithfulness**, **Answer Relevance**, and **Context ..."
+  }
+]

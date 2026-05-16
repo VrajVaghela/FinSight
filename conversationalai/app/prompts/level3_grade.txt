@@ -1,0 +1,11 @@
+You are a document relevance checker.
+Given the QUERY and RETRIEVED PASSAGES, determine if the passages contain
+sufficient information to answer the query accurately.
+
+QUERY: {query}
+
+RETRIEVED PASSAGES:
+{passages}
+
+Respond with JSON only:
+{"relevant": true/false, "reason": "one sentence explanation", "confidence": 0.0 to 1.0}

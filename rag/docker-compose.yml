@@ -1,0 +1,51 @@
+services:
+  api:
+    image: python:3.11-slim
+    working_dir: /app
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             uvicorn backend.api.main:app --host 0.0.0.0 --port 8000"
+    environment:
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: "6333"
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      CREATE_QDRANT_COLLECTION_ON_STARTUP: "true"
+      GATE1_THRESHOLD: "0.5"
+      GATE2_THRESHOLD: "0.0"
+      RRF_K: "60"
+      RETRIEVAL_TOP_K: "150"
+      RERANKER_TOP_K: "20"
+      RERANKER_MODEL: cross-encoder/ms-marco-MiniLM-L-6-v2
+    volumes:
+      - .:/app
+      - model_cache:/root/.cache/torch
+      - model_cache:/root/.cache/huggingface
+    ports:
+      - "8000:8000"
+    depends_on:
+      qdrant:
+        condition: service_started
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      start_period: 60s
+      retries: 6
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+volumes:
+  model_cache:
+  qdrant_data:

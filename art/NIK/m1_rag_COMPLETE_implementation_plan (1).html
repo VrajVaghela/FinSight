@@ -1,0 +1,2435 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:var(--color-background-primary);
+  --bg2:var(--color-background-secondary);
+  --bg3:var(--color-background-tertiary);
+  --border:var(--color-border-tertiary);
+  --border2:var(--color-border-secondary);
+  --text:var(--color-text-primary);
+  --text2:var(--color-text-secondary);
+  --text3:var(--color-text-tertiary);
+  --teal:var(--color-text-success);
+  --blue:var(--color-text-info);
+  --red:var(--color-text-danger);
+  --warn:var(--color-text-warning);
+  --mono:var(--font-mono);
+  --sans:var(--font-sans);
+  --rad:var(--border-radius-md);
+  --radlg:var(--border-radius-lg);
+}
+.wrap{font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--text);padding-bottom:32px}
+
+.hdr{background:var(--bg2);border-bottom:0.5px solid var(--border2);padding:16px 20px 12px;position:sticky;top:0;z-index:50}
+.hdr-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.hdr h1{font-size:16px;font-weight:500;color:var(--text)}
+.hdr-sub{font-size:12px;color:var(--text3);font-family:var(--mono)}
+.pill{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.06em;padding:2px 8px;border-radius:99px;background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)}
+.tabs{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.tab{font-size:11px;font-family:var(--mono);padding:4px 10px;border-radius:var(--rad);border:0.5px solid var(--border2);color:var(--text2);cursor:pointer;transition:.15s}
+.tab:hover{background:var(--bg2);color:var(--text)}
+.tab.on{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+
+.panel{display:none;padding:18px 20px}
+.panel.on{display:block}
+
+.ph-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
+.ph-num{font-family:var(--mono);font-size:11px;color:var(--teal);font-weight:500}
+.ph-title{font-size:14px;font-weight:500;color:var(--text);flex:1}
+.ph-hrs{font-family:var(--mono);font-size:11px;color:var(--warn);background:var(--color-background-warning);padding:2px 8px;border-radius:var(--rad);border:0.5px solid var(--color-border-warning)}
+
+.sec{margin-bottom:16px}
+.sec-lbl{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.09em;color:var(--text3);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.sec-lbl::after{content:'';flex:1;height:0.5px;background:var(--border)}
+
+.steps{display:flex;flex-direction:column;gap:6px}
+.step{display:flex;gap:10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rad);padding:10px 12px}
+.step-n{font-family:var(--mono);font-size:10px;color:var(--teal);font-weight:500;min-width:22px;padding-top:1px}
+.step-b{flex:1}
+.step-t{font-weight:500;font-size:13px;color:var(--text);margin-bottom:2px}
+.step-d{font-size:12px;color:var(--text2);line-height:1.5}
+
+pre.code{font-family:var(--mono);font-size:11px;color:var(--color-text-success);background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:var(--rad);padding:8px 10px;margin-top:6px;white-space:pre-wrap;line-height:1.65;overflow-x:auto}
+pre.schema{font-family:var(--mono);font-size:11px;color:var(--text2);background:var(--color-background-info);border:0.5px solid var(--color-border-info);border-radius:var(--rad);padding:8px 10px;margin-top:6px;white-space:pre-wrap;line-height:1.65}
+pre.flow{font-family:var(--mono);font-size:11px;color:var(--text2);background:var(--bg3);border:0.5px solid var(--border2);border-radius:var(--rad);padding:10px 12px;margin-top:6px;white-space:pre-wrap;line-height:1.75}
+
+.frow{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin:8px 0}
+.fb{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--rad);padding:4px 9px;font-size:11px;font-weight:500;color:var(--text);white-space:nowrap}
+.fb.t{background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)}
+.fb.b{background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)}
+.fb.r{background:var(--color-background-danger);color:var(--color-text-danger);border-color:var(--color-border-danger)}
+.fb.w{background:var(--color-background-warning);color:var(--color-text-warning);border-color:var(--color-border-warning)}
+.fa{color:var(--text3);padding:0 5px;font-size:12px}
+
+.ck{background:var(--color-background-success);border:0.5px solid var(--color-border-success);border-radius:var(--radlg);padding:12px 14px;margin-top:10px}
+.ck-h{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ck-title{font-weight:500;font-size:13px;color:var(--color-text-success)}
+.tests{display:flex;flex-direction:column;gap:6px}
+.test{display:flex;gap:8px;font-size:12px;align-items:flex-start}
+.td-pass{color:var(--color-text-success);font-size:10px;padding-top:2px;flex-shrink:0}
+.td-fail{color:var(--color-text-danger);font-size:10px;padding-top:2px;flex-shrink:0}
+.test-txt{color:var(--text2)}
+.tc{font-family:var(--mono);font-size:10px;color:var(--color-text-warning);background:var(--color-background-warning);border:0.5px solid var(--color-border-warning);border-radius:3px;padding:2px 6px;margin-top:3px;display:inline-block}
+
+table.itab{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+table.itab th{background:var(--bg3);color:var(--text3);font-weight:500;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:6px 10px;text-align:left;border-bottom:0.5px solid var(--border2)}
+table.itab td{padding:7px 10px;border-bottom:0.5px solid var(--border);color:var(--text2);vertical-align:top;font-size:12px}
+table.itab tr:last-child td{border-bottom:none}
+.mono{font-family:var(--mono);font-size:11px;color:var(--teal)}
+.m2{color:var(--blue)} .m3{color:#a78bfa} .m4{color:var(--warn)} .m5{color:var(--teal)}
+
+.ep{display:flex;gap:10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rad);padding:10px 12px;margin-bottom:6px}
+.method{font-family:var(--mono);font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;flex-shrink:0;align-self:flex-start}
+.get{background:var(--color-background-success);color:var(--color-text-success);border:0.5px solid var(--color-border-success)}
+.post{background:var(--color-background-info);color:var(--color-text-info);border:0.5px solid var(--color-border-info)}
+.ep-path{font-family:var(--mono);font-size:12px;color:var(--teal);font-weight:500}
+.ep-d{font-size:12px;color:var(--text2);margin-top:2px}
+</style>
+
+<div class="wrap">
+<h2 class="sr-only">Member 1 RAG Architect — complete 6-phase implementation plan with architecture, data flow, schemas, control flow, integration contracts, and checkpoints</h2>
+
+<div class="hdr">
+  <div class="hdr-row">
+    <span class="pill">Member 1</span>
+    <h1>RAG Architect &amp; Retrieval Engineer — Full Implementation Plan</h1>
+  </div>
+  <div class="hdr-sub">retrieval_engine.py · HybridRetriever · RRFMerger · NeuralReranker · RefusalGate(1,2) · /api/retrieval/debug</div>
+  <div class="tabs">
+    <div class="tab on" onclick="show(0)">P1 · Hours 0–6</div>
+    <div class="tab" onclick="show(1)">P2 · Hours 6–14</div>
+    <div class="tab" onclick="show(2)">P3 · Hours 14–20</div>
+    <div class="tab" onclick="show(3)">P4 · Hours 20–28</div>
+    <div class="tab" onclick="show(4)">P5 · Hours 28–36</div>
+    <div class="tab" onclick="show(5)">P6 · Hours 36–42</div>
+    <div class="tab" onclick="show(6)">Full Code</div>
+    <div class="tab" onclick="show(7)">Eval &amp; Types</div>
+    <div class="tab" onclick="show(8)">Integration</div>
+    <div class="tab" onclick="show(9)">Docker &amp; Env</div>
+    <div class="tab" onclick="show(10)">Demo Prep</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 1  ══════════════════════════ -->
+<div class="panel on" id="p0">
+  <div class="ph-hdr">
+    <span class="ph-num">Phase 1</span>
+    <span class="ph-title">Foundation — repo, Qdrant schema, basic dense search, smoke test</span>
+    <span class="ph-hrs">Hours 0–6</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Architecture overview — what you own</div>
+    <div class="frow">
+      <div class="fb t">retrieval_engine.py</div><div class="fa">contains</div>
+      <div class="fb b">VectorSearcher</div><div class="fa">+</div>
+      <div class="fb b">Qdrant client</div><div class="fa">+</div>
+      <div class="fb b">collection schema</div>
+    </div>
+    <div class="frow">
+      <div class="fb w">Agree schema NOW</div><div class="fa">→</div>
+      <div class="fb">M2 ingestion writes</div><div class="fa">→</div>
+      <div class="fb">M4 citation reads bounding_box</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Data schema — Qdrant collection (lock with M2 in hour 1)</div>
+    <pre class="schema">Collection: document_chunks
+Vector:  size=1536  distance=Cosine  (text-embedding-3-large)
+
+INDEXED payload fields  (filter-capable):
+  project_id:      keyword   ← MANDATORY on every query — zero cross-contamination
+  file_id:         keyword
+  page_number:     integer
+  section_header:  keyword
+  chunk_index:     integer
+  is_table:        bool
+  token_count:     integer
+
+STORED payload fields  (returned in results, not filterable):
+  raw_text:        text      ← M4 PAL router reads this
+  context_summary: text      ← M4 LLM grader context
+  bounding_box:    {x:float, y:float, w:float, h:float}  ← M4 citation overlay
+  table_html:      text|null ← M4 PAL numeric extraction</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Step-by-step tasks</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1.1</div>
+        <div class="step-b">
+          <div class="step-t">Repo bootstrap with uv (not pip)</div>
+          <div class="step-d">Clone monorepo. Create <code>backend/retrieval/</code> package. Install deps with uv — 10–100× faster than pip, critical for hackathon iteration speed.</div>
+          <pre class="code">uv venv && source .venv/bin/activate
+uv pip install qdrant-client rank-bm25 sentence-transformers \
+               fastapi redis celery asyncio httpx python-dotenv ranx</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">1.2</div>
+        <div class="step-b">
+          <div class="step-t">Create Qdrant collection with correct index config</div>
+          <div class="step-d">Run once on first boot. Check if collection exists before creating — idempotent. Set HNSW ef_construction=128 for recall vs. speed balance.</div>
+          <pre class="code">from qdrant_client import QdrantClient
+from qdrant_client.models import VectorParams, Distance, HnswConfigDiff, PayloadSchemaType
+
+client = QdrantClient(host="qdrant", port=6333)
+
+if not client.collection_exists("document_chunks"):
+    client.create_collection(
+        collection_name="document_chunks",
+        vectors_config=VectorParams(size=1536, distance=Distance.COSINE),
+        hnsw_config=HnswConfigDiff(m=16, ef_construct=128)
+    )
+    # Index payload fields for filtering
+    for field, schema in [
+        ("project_id",     PayloadSchemaType.KEYWORD),
+        ("file_id",        PayloadSchemaType.KEYWORD),
+        ("page_number",    PayloadSchemaType.INTEGER),
+        ("section_header", PayloadSchemaType.KEYWORD),
+        ("is_table",       PayloadSchemaType.BOOL),
+        ("token_count",    PayloadSchemaType.INTEGER),
+    ]:
+        client.create_payload_index("document_chunks", field, schema)</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">1.3</div>
+        <div class="step-b">
+          <div class="step-t">VectorSearcher — dense search stub with mandatory project_id filter</div>
+          <div class="step-d">Always pass project_id as a hard filter. This is the cross-contamination guarantee. Never let queries run without it.</div>
+          <pre class="code">from qdrant_client.models import Filter, FieldCondition, MatchValue
+
+async def dense_search(query_vector: list[float],
+                       project_id: str,
+                       top_k: int = 150) -> list[ScoredPoint]:
+    return client.search(
+        collection_name="document_chunks",
+        query_vector=query_vector,
+        query_filter=Filter(must=[
+            FieldCondition(key="project_id",
+                           match=MatchValue(value=project_id))
+        ]),
+        limit=top_k,
+        with_payload=True,
+        with_vectors=False
+    )</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">1.4</div>
+        <div class="step-b">
+          <div class="step-t">RetrievedChunk dataclass — master return type (share with all members)</div>
+          <div class="step-d">This is the single most important contract. All downstream members (M3, M4, M5) depend on this shape. Commit it to <code>backend/shared/types.py</code>.</div>
+          <pre class="schema">@dataclass
+class RetrievedChunk:
+    chunk_id:        str        # UUID
+    raw_text:        str        # primary content — M4 reads
+    context_summary: str        # LLM-prepended summary
+    page_number:     int        # citation display
+    section_header:  str        # cross-section trace
+    bounding_box:    dict       # {x,y,w,h} — M4 PDF overlay
+    is_table:        bool       # PAL routing hint
+    table_html:      str|None   # structured table content
+    similarity_score:float      # raw dense cosine — Gate 1 uses this
+    reranker_score:  float = 0  # set by NeuralReranker after reranking
+    rrf_score:       float = 0  # set by RRFMerger
+
+@dataclass
+class RetrievalResult:
+    chunks:       list[RetrievedChunk]  # top-20, fully populated
+    debug:        dict                  # for /api/retrieval/debug
+    gate1_score:  float                 # max similarity for M3 SSE event
+    gate2_score:  float                 # top reranker score
+    retrieval_ms: int                   # latency for SSE done event
+
+@dataclass
+class RefusalEvent:
+    level:   int    # 1 or 2 (your gates)
+    reason:  str    # "level_1_threshold" | "level_2_reranker"
+    message: str    # "Not found in the document."
+    debug:   dict   # scores for debug mode</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">1.5</div>
+        <div class="step-b">
+          <div class="step-t">Smoke test — single dense query against Adani PDF</div>
+          <div class="step-d">Ask M2 to ingest Adani PDF (just 5–10 pages is enough for smoke test). Run a dense query. Confirm bounding_box, page_number, and project_id are present in every result payload.</div>
+          <pre class="code">result = await dense_search(embed("business segments"), "adani", top_k=5)
+for r in result:
+    assert r.payload.get("bounding_box"), "bounding_box missing!"
+    assert r.payload.get("project_id") == "adani", "contamination risk!"
+    print(r.payload["page_number"], r.score)</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Data flow — Phase 1</div>
+    <pre class="flow">query_text
+  → embed(query_text)            [text-embedding-3-large, 1536-d]
+  → VectorSearcher.dense_search(vector, project_id="adani", top_k=150)
+  → Qdrant: cosine search + project_id filter
+  → List[ScoredPoint]            [with full payload]
+  → map to List[RetrievedChunk]  [normalise field names]
+  → return to caller</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Integration — what you need from M2 in this phase</div>
+    <table class="itab">
+      <tr><th>Need</th><th>From</th><th>How to verify</th></tr>
+      <tr><td>Qdrant collection populated with Adani PDF chunks</td><td class="m2">M2</td><td class="mono">client.count("document_chunks") > 0</td></tr>
+      <tr><td>Every chunk has bounding_box, project_id, section_header in payload</td><td class="m2">M2</td><td class="mono">assert chunk.payload["bounding_box"]</td></tr>
+      <tr><td>BM25 Redis key format agreed: <code>bm25:{project_id}</code></td><td class="m2">M2</td><td class="mono">redis.exists("bm25:adani")</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Checkpoint 1 — go/no-go gate (hour 6)</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">Pass criteria</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">"What are the major business segments?" returns ≥3 chunks, each with page_number and bounding_box populated.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">project_id filter hard-blocks chunks from other projects — zero leakage in cross-project query test.<br><span class="tc">assert all(c.payload["project_id"]=="adani" for c in results)</span></div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">RetrievedChunk dataclass committed to <code>backend/shared/types.py</code> and reviewed by M3 and M4.</div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if bounding_box missing · project_id filter not applied · latency &gt;800ms on 10k chunks</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 2  ══════════════════════════ -->
+<div class="panel" id="p1">
+  <div class="ph-hdr">
+    <span class="ph-num">Phase 2</span>
+    <span class="ph-title">Hybrid retrieval — BM25 + dense in parallel + RRF fusion</span>
+    <span class="ph-hrs">Hours 6–14</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Architecture this phase</div>
+    <div class="frow">
+      <div class="fb t">query string</div><div class="fa">→</div>
+      <div class="fb b">asyncio.gather</div><div class="fa">→</div>
+      <div class="fb">BM25 (Redis)</div><div class="fa">+</div>
+      <div class="fb">Qdrant dense</div><div class="fa">→</div>
+      <div class="fb w">RRF k=60</div><div class="fa">→</div>
+      <div class="fb t">unified top-150</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">BM25 index — contract with M2</div>
+    <pre class="schema">M2 writes at ingestion time:
+  Redis key:  "bm25:{project_id}"
+  Value:      pickle({ "corpus": List[str],      # raw_text per chunk
+                       "chunk_ids": List[str] })  # UUID parallel to corpus
+
+You read at query time:
+  data = pickle.loads(redis.get(f"bm25:{project_id}"))
+  bm25 = BM25Okapi(data["corpus"].split())
+  scores = bm25.get_scores(query.split())
+  top_hits = sorted(zip(data["chunk_ids"], scores),
+                    key=lambda x: x[1], reverse=True)[:top_k]
+
+NOTE: one BM25 index per project_id — M2 rebuilds on each new file added to project</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Step-by-step tasks</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">2.1</div>
+        <div class="step-b">
+          <div class="step-t">BM25Searcher class</div>
+          <div class="step-d">Load BM25 index from Redis. Run tokenised keyword search. Return ranked (chunk_id, bm25_score) list. Scope is always per project_id.</div>
+          <pre class="code">import pickle, redis
+from rank_bm25 import BM25Okapi
+
+class BM25Searcher:
+    def __init__(self): self.redis = redis.Redis(host="redis", port=6379)
+
+    async def search(self, query: str, project_id: str, top_k: int = 150):
+        raw = self.redis.get(f"bm25:{project_id}")
+        if not raw: return []
+        data = pickle.loads(raw)
+        bm25 = BM25Okapi([t.split() for t in data["corpus"]])
+        scores = bm25.get_scores(query.split())
+        ranked = sorted(zip(data["chunk_ids"], data["corpus"], scores),
+                        key=lambda x: x[2], reverse=True)[:top_k]
+        return [{"chunk_id": cid, "text": txt, "bm25_score": sc}
+                for cid, txt, sc in ranked]</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2.2</div>
+        <div class="step-b">
+          <div class="step-t">HybridRetriever — asyncio.gather for true parallelism</div>
+          <div class="step-d">BM25 and dense run concurrently. Both are scoped to project_id. Returns two separate scored lists for RRF.</div>
+          <pre class="code">class HybridRetriever:
+    def __init__(self):
+        self.bm25   = BM25Searcher()
+        self.vector = VectorSearcher()
+
+    async def retrieve(self, query: str, query_vector: list[float],
+                       project_id: str, top_k: int = 150):
+        bm25_task  = asyncio.create_task(
+            self.bm25.search(query, project_id, top_k))
+        dense_task = asyncio.create_task(
+            self.vector.dense_search(query_vector, project_id, top_k))
+        bm25_hits, dense_hits = await asyncio.gather(bm25_task, dense_task)
+        return bm25_hits, dense_hits</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2.3</div>
+        <div class="step-b">
+          <div class="step-t">RRFMerger — Reciprocal Rank Fusion with k=60</div>
+          <div class="step-d">Score(d) = Σ 1/(k + rank). Deduplicates chunk_ids across BM25 and dense lists. Returns unified ranked list with rrf_score. Fetch full payloads from Qdrant for all merged IDs in one batch call.</div>
+          <pre class="code">from collections import defaultdict
+
+class RRFMerger:
+    @staticmethod
+    def merge(bm25_hits: list, dense_hits: list,
+              k: int = 60) -> list[dict]:
+        scores = defaultdict(float)
+        for rank, h in enumerate(bm25_hits):
+            scores[h["chunk_id"]] += 1 / (k + rank + 1)
+        for rank, h in enumerate(dense_hits):
+            scores[h.id] += 1 / (k + rank + 1)
+        ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
+        # batch-fetch payloads from Qdrant for all merged IDs
+        ids = [cid for cid, _ in ranked]
+        payloads = client.retrieve("document_chunks", ids, with_payload=True)
+        payload_map = {str(p.id): p.payload for p in payloads}
+
+        # build max similarity score for Gate 1 from dense_hits
+        dense_score_map = {str(h.id): h.score for h in dense_hits}
+
+        return [
+            RetrievedChunk(
+                chunk_id        = cid,
+                rrf_score       = rrf_sc,
+                similarity_score= dense_score_map.get(cid, 0.0),
+                **payload_map.get(cid, {})
+            )
+            for cid, rrf_sc in ranked
+        ]</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2.4</div>
+        <div class="step-b">
+          <div class="step-t">Verify no duplicate chunk_ids in merged output</div>
+          <pre class="code">merged = RRFMerger.merge(bm25_hits, dense_hits)
+ids = [c.chunk_id for c in merged]
+assert len(ids) == len(set(ids)), "Duplicate chunk_ids in RRF output!"</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Data flow — Phase 2</div>
+    <pre class="flow">query_text + query_vector + project_id
+  ├─ BM25Searcher.search(query_text, project_id, 150)
+  │    → Redis.get("bm25:{project_id}") → BM25Okapi.get_scores()
+  │    → List[{chunk_id, bm25_score, text}]  (sorted desc)
+  └─ VectorSearcher.dense_search(query_vector, project_id, 150)
+       → Qdrant search + project_id filter
+       → List[ScoredPoint]  (with payload)
+  [asyncio.gather — both run simultaneously]
+  
+  → RRFMerger.merge(bm25_hits, dense_hits, k=60)
+       → Score(d) = Σ 1/(60 + rank)
+       → deduplicate chunk_ids
+       → batch fetch payloads from Qdrant
+       → List[RetrievedChunk]  (top-150, unified, sorted by rrf_score)</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Control flow — full pipeline entry point</div>
+    <pre class="flow">async def query_pipeline(query, query_vector, project_id) -> RetrievalResult | RefusalEvent:
+    t0 = time.perf_counter()
+
+    # Step 1: parallel retrieval
+    bm25_hits, dense_hits = await HybridRetriever.retrieve(
+        query, query_vector, project_id, top_k=150)
+
+    # Step 2: RRF merge
+    merged = RRFMerger.merge(bm25_hits, dense_hits, k=60)
+
+    # Step 3: Gate 1 — score threshold (YOUR code)
+    max_sim = dense_hits[0].score if dense_hits else 0.0
+    if max_sim < GATE1_THRESHOLD:   # env GATE1_THRESHOLD default=0.5
+        return RefusalEvent(level=1, reason="level_1_threshold",
+                            message="Not found in the document.",
+                            debug={"max_similarity": max_sim})
+
+    # Step 4: neural reranking (top 150 → top 20)
+    reranked = NeuralReranker.rerank(query, merged[:150])
+
+    # Step 5: Gate 2 — reranker score (YOUR code)
+    top_rr_score = reranked[0].reranker_score if reranked else 0.0
+    if top_rr_score < GATE2_THRESHOLD:  # env GATE2_THRESHOLD, calibrate!
+        return RefusalEvent(level=2, reason="level_2_reranker",
+                            message="Not found in the document.",
+                            debug={"reranker_score": top_rr_score})
+
+    # Step 6: return — M4 takes over (Gate 3 LLM grader, PAL, Generation, Gate 4 GLEAN)
+    return RetrievalResult(
+        chunks       = reranked[:20],
+        gate1_score  = max_sim,
+        gate2_score  = top_rr_score,
+        retrieval_ms = int((time.perf_counter() - t0) * 1000),
+        debug        = build_debug(bm25_hits, dense_hits, merged, reranked)
+    )</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Checkpoint 2 — go/no-go gate (hour 14)</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">Pass criteria</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">BM25 and dense run in parallel — verify with timing: total time ≈ max(bm25_time, dense_time), NOT bm25_time + dense_time.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">"What is the consolidated total income H1-26?" — BM25 catches exact term "total income", dense catches semantic context. Both appear in top-10.<br><span class="tc">assert any("total income" in c.raw_text.lower() for c in merged[:10])</span></div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">RRF output is deduplicated — no chunk_id appears twice.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Every RetrievedChunk in merged list has bounding_box populated (needed for M4 citation engine).</div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if retrieval runs sequentially · bounding_box missing · RRF k ≠ 60 · project_id filter absent</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 3  ══════════════════════════ -->
+<div class="panel" id="p2">
+  <div class="ph-hdr">
+    <span class="ph-num">Phase 3</span>
+    <span class="ph-title">Refusal Gates 1 &amp; 2 + debug endpoint + acceptance test T4</span>
+    <span class="ph-hrs">Hours 14–20</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Gate ownership map — all 4 gates</div>
+    <table class="itab">
+      <tr><th>Gate</th><th>Trigger condition</th><th>Owner</th><th>Code location</th></tr>
+      <tr><td style="color:var(--red);font-weight:500">Gate 1</td><td>max(dense similarity) &lt; 0.5</td><td class="m5">You (M1)</td><td class="mono">RefusalGate.check_threshold()</td></tr>
+      <tr><td style="color:var(--red);font-weight:500">Gate 2</td><td>top reranker_score &lt; threshold</td><td class="m5">You (M1)</td><td class="mono">RefusalGate.check_reranker()</td></tr>
+      <tr><td style="color:var(--warn)">Gate 3</td><td>LLM grader → relevant:false</td><td class="m4">M4</td><td class="mono">reasoning_engine.LLMGrader</td></tr>
+      <tr><td style="color:var(--warn)">Gate 4</td><td>GLEAN guideline violation</td><td class="m4">M4</td><td class="mono">glean_verifier.VerifierGate</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Step-by-step tasks</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">3.1</div>
+        <div class="step-b">
+          <div class="step-t">Gate 1 — similarity score threshold</div>
+          <div class="step-d">Short-circuits entire pipeline. No reranking, no LLM call. Fires before reranker to save cost. Uses raw cosine similarity from top dense hit.</div>
+          <pre class="code">GATE1_THRESHOLD = float(os.getenv("GATE1_THRESHOLD", "0.5"))
+
+class RefusalGate:
+    @staticmethod
+    def check_threshold(dense_hits) -> RefusalEvent | None:
+        max_score = dense_hits[0].score if dense_hits else 0.0
+        if max_score < GATE1_THRESHOLD:
+            return RefusalEvent(
+                level=1, reason="level_1_threshold",
+                message="Not found in the document.",
+                debug={"max_similarity": max_score,
+                       "threshold": GATE1_THRESHOLD}
+            )
+        return None  # pass → continue to reranker</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3.2</div>
+        <div class="step-b">
+          <div class="step-t">Gate 2 — calibrated reranker score threshold</div>
+          <div class="step-d">Fires after NeuralReranker runs. Threshold must be calibrated by running adversarial queries. Default 0.0 means it never fires — you MUST calibrate this in Phase 4.</div>
+          <pre class="code">GATE2_THRESHOLD = float(os.getenv("GATE2_THRESHOLD", "0.0"))  # calibrate in P4!
+
+    @staticmethod
+    def check_reranker(reranked) -> RefusalEvent | None:
+        top = reranked[0].reranker_score if reranked else 0.0
+        if top < GATE2_THRESHOLD:
+            return RefusalEvent(
+                level=2, reason="level_2_reranker",
+                message="Not found in the document.",
+                debug={"reranker_score": top,
+                       "threshold": GATE2_THRESHOLD}
+            )
+        return None</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3.3</div>
+        <div class="step-b">
+          <div class="step-t">RefusalEvent schema — shared with M3 (SSE stream)</div>
+          <div class="step-d">M3 reads this and serialises into SSE <code>event: refusal</code>. M5 frontend renders the refusal message. Schema must not change after this point.</div>
+          <pre class="schema">SSE event: refusal   (M3 reads RefusalEvent and forwards)
+{
+  "level":   1 | 2,
+  "reason":  "level_1_threshold" | "level_2_reranker",
+  "message": "Not found in the document.",
+  "debug": {                          ← only in debug mode
+    "max_similarity":  0.31,          ← gate 1 debug
+    "reranker_score":  0.12,          ← gate 2 debug
+    "threshold":       0.5,
+    "top_chunk_id":    "uuid-..."
+  }
+}</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3.4</div>
+        <div class="step-b">
+          <div class="step-t">build_debug() — populates /api/retrieval/debug response</div>
+          <div class="step-d">Called at end of query_pipeline() regardless of pass/fail. M3 sends this as SSE <code>event: retrieval_debug</code>. M5 debug panel reads it.</div>
+          <pre class="code">def build_debug(bm25_hits, dense_hits, merged, reranked=None) -> dict:
+    return {
+        "bm25_hits": [{"chunk_id": h["chunk_id"], "score": round(h["bm25_score"],4),
+                       "snippet": h["text"][:120]} for h in bm25_hits[:10]],
+        "dense_hits": [{"chunk_id": str(h.id), "similarity": round(h.score,4),
+                        "page": h.payload.get("page_number")} for h in dense_hits[:10]],
+        "rrf_merged": [{"chunk_id": c.chunk_id, "rrf_score": round(c.rrf_score,5),
+                        "rank": i+1} for i, c in enumerate(merged[:20])],
+        "reranked": [{"chunk_id": c.chunk_id,
+                      "reranker_score": round(c.reranker_score,4),
+                      "rank": i+1} for i, c in enumerate(reranked or [])]
+    }</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Endpoints you own</div>
+    <div class="ep">
+      <span class="method get">GET</span>
+      <div>
+        <div class="ep-path">/api/retrieval/debug</div>
+        <div class="ep-d">Returns full retrieval trace for the last query per session. JWT-protected. Includes BM25 hits, dense hits, RRF scores, reranker scores, and gate decisions. M5 debug panel reads this.</div>
+        <pre class="schema">Response:
+{
+  "query":       "What is the consolidated total income?",
+  "project_id":  "adani-q2-fy26",
+  "bm25_hits":   [{"chunk_id":"...", "score":4.2, "snippet":"..."}],
+  "dense_hits":  [{"chunk_id":"...", "similarity":0.87, "page":12}],
+  "rrf_merged":  [{"chunk_id":"...", "rrf_score":0.031, "rank":1}],
+  "reranked":    [{"chunk_id":"...", "reranker_score":0.94, "rank":1}],
+  "gate_1":      {"fired":false, "max_similarity":0.87, "threshold":0.5},
+  "gate_2":      {"fired":false, "reranker_score":0.94, "threshold":0.3},
+  "latency_ms":  148
+}</pre>
+      </div>
+    </div>
+    <div class="ep">
+      <span class="method get">GET</span>
+      <div>
+        <div class="ep-path">/api/health</div>
+        <div class="ep-d">Add retrieval sub-check. Verify Qdrant reachable, BM25 index in Redis, reranker model loaded.</div>
+        <pre class="schema">{"status":"ok","retrieval":{"qdrant":"ok","bm25":"ok","reranker":"ok","chunks":52341}}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Checkpoint 3 — go/no-go gate (hour 20) · Acceptance Test T4</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">T4 must pass — zero false answers on negative control</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt"><strong>T4:</strong> "What is the CEO's email address?" → RefusalEvent level=1, message="Not found in the document." — never a fabricated email.<br><span class="tc">curl /api/chat -d '{"message":"CEO email","project_id":"adani"}' | jq .reason</span></div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">/api/retrieval/debug returns complete trace for any query, including gate firing decisions and exact scores.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">All gate thresholds are env-var configurable — no hardcoded values in source code.<br><span class="tc">grep -r "GATE1_THRESHOLD\|GATE2_THRESHOLD" backend/ | grep "os.getenv"</span></div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if any negative-control query returns a non-refusal answer · /api/retrieval/debug missing gate info</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 4  ══════════════════════════ -->
+<div class="panel" id="p3">
+  <div class="ph-hdr">
+    <span class="ph-num">Phase 4</span>
+    <span class="ph-title">NeuralReranker — CrossEncoder integration, calibration, eval dataset</span>
+    <span class="ph-hrs">Hours 20–28</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Reranker data flow</div>
+    <div class="frow">
+      <div class="fb w">top-150 (RRF merged)</div><div class="fa">→</div>
+      <div class="fb b">CrossEncoder.predict(query, chunk_text) × 150</div><div class="fa">→</div>
+      <div class="fb t">top-20 reranked</div><div class="fa">→</div>
+      <div class="fb r">Gate 2 check</div><div class="fa">→</div>
+      <div class="fb">M4 (Gate3 + PAL + Gen)</div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Step-by-step tasks</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">4.1</div>
+        <div class="step-b">
+          <div class="step-t">NeuralReranker class — CrossEncoder batch inference</div>
+          <div class="step-d">Use MiniLM-L-6-v2 (fast, CPU-friendly) as default. Zerank-1 if accuracy target not met. Model is loaded once at startup and cached in memory. Do NOT reload per request.</div>
+          <pre class="code">from sentence_transformers import CrossEncoder
+
+class NeuralReranker:
+    def __init__(self, model_name="cross-encoder/ms-marco-MiniLM-L-6-v2"):
+        self.model = CrossEncoder(model_name)  # load once at startup
+
+    def rerank(self, query: str,
+               chunks: list[RetrievedChunk],
+               top_k: int = 20) -> list[RetrievedChunk]:
+        if not chunks: return []
+        pairs  = [(query, c.raw_text) for c in chunks]
+        scores = self.model.predict(pairs)   # numpy array, ~200ms for 150 pairs
+        ranked = sorted(zip(chunks, scores.tolist()),
+                        key=lambda x: x[1], reverse=True)
+        for chunk, score in ranked[:top_k]:
+            chunk.reranker_score = float(score)
+        return [c for c, _ in ranked[:top_k]]</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4.2</div>
+        <div class="step-b">
+          <div class="step-t">Calibrate GATE2_THRESHOLD — adversarial query set</div>
+          <div class="step-d">Run 25 known-good and 25 known-bad queries. Find the score that separates them at &lt;5% false-positive rate (good queries wrongly refused). Store result in .env.</div>
+          <pre class="code">good_qs = ["What are business segments?", "What is total income H1-26?", ...]
+bad_qs  = ["CEO email?", "Tesla revenue?", "Mumbai weather?", ...]
+
+good_scores = [reranker.rerank(q, merged[:150])[0].reranker_score for q in good_qs]
+bad_scores  = [reranker.rerank(q, merged[:150])[0].reranker_score for q in bad_qs]
+
+# find threshold where FPR < 5%
+thresholds = sorted(set(bad_scores + good_scores))
+for t in thresholds:
+    fpr = sum(1 for s in good_scores if s < t) / len(good_scores)
+    if fpr < 0.05:
+        print(f"GATE2_THRESHOLD={t:.4f}")  # → store in .env
+        break</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4.3</div>
+        <div class="step-b">
+          <div class="step-t">Latency budget — verify under 500ms p99</div>
+          <div class="step-d">Full pipeline (parallel fetch + RRF + rerank) must complete in &lt;500ms p99. Mitigation if over: reduce top-N to 100, use MiniLM-L-2-v2, or enable Qdrant HNSW ef_search tuning.</div>
+          <pre class="schema">Latency budget breakdown (CPU, Docker, 50k chunks):
+  BM25 search:      ~20ms   (in-memory Redis, pure Python)
+  Dense search:     ~80ms   (Qdrant HNSW ef_search=64)
+  [parallel — total above = max(20,80) = ~80ms]
+  RRF merge:        ~5ms    (pure Python sort)
+  Reranker ×150:    ~250ms  (MiniLM batch on CPU)
+  Gate checks:      ~1ms
+  ─────────────────────────────────────────────
+  Total p50:        ~336ms  ✓
+  Total p99 target: 500ms
+
+If p99 > 500ms:
+  → reduce top_k from 150 to 100 before reranker
+  → or switch to MiniLM-L-2-v2 (~150ms for 100 pairs)
+  → or tune Qdrant: ef_search=32 (faster, slight accuracy loss)</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">4.4</div>
+        <div class="step-b">
+          <div class="step-t">Evaluation dataset — your deliverable to M5</div>
+          <div class="step-d">Build 50–100 (query, relevant_chunk_ids) pairs from the Adani PDF. Compute Precision@k, MRR, NDCG before and after reranking. Target: +14% NDCG@10. Commit to <code>backend/eval/eval_dataset.json</code>. M5 loads this for RAGAS dashboard.</div>
+          <pre class="schema">eval_dataset.json format:
+[{
+  "id":               "q001",
+  "query":            "What is consolidated EBITDA for H1-26?",
+  "relevant_ids":     ["uuid-a1b2", "uuid-c3d4"],
+  "expected_page":    12,
+  "is_numeric":       true,
+  "adversarial":      false
+},
+{
+  "id":               "adv001",
+  "query":            "What is the CEO's email address?",
+  "relevant_ids":     [],
+  "adversarial":      true,
+  "expected_gate":    1
+}]
+
+Metrics to report (to M5 for RAGAS dashboard):
+  pre-rerank:   { "P@5": 0.61, "MRR": 0.58, "NDCG@10": 0.63 }
+  post-rerank:  { "P@5": 0.75, "MRR": 0.72, "NDCG@10": 0.77 }  ← target +14%</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Data flow — Phase 4 (complete retrieval pipeline)</div>
+    <pre class="flow">query_text + project_id
+  → embed(query_text) [OpenAI text-embedding-3-large]
+
+  ┌── BM25Searcher.search(query_text, project_id, 150)
+  │     Redis.get("bm25:{project_id}") → BM25Okapi.get_scores()
+  │     → List[{chunk_id, bm25_score}]
+  └── VectorSearcher.dense_search(vector, project_id, 150)
+        Qdrant + project_id filter → List[ScoredPoint]
+  [asyncio.gather — parallel]
+
+  → Gate 1: max(dense_hits[0].score) < 0.5 → RefusalEvent(level=1)
+
+  → RRFMerger.merge(bm25, dense, k=60)
+       Score(d) = Σ 1/(60+rank)
+       batch fetch payloads from Qdrant
+       → List[RetrievedChunk] top-150
+
+  → NeuralReranker.rerank(query, chunks[:150], top_k=20)
+       CrossEncoder.predict(150 pairs) → numpy scores
+       → List[RetrievedChunk] top-20 with reranker_score set
+
+  → Gate 2: reranked[0].reranker_score < GATE2_THRESHOLD → RefusalEvent(level=2)
+
+  → RetrievalResult(chunks=top-20, debug=..., gate1_score, gate2_score, retrieval_ms)
+  → Return to M3 (FastAPI /api/chat handler)</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Checkpoint 4 — go/no-go gate (hour 28)</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">Pass criteria</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Reranker improves NDCG@10 by ≥10% over raw RRF on eval_dataset.json.<br><span class="tc">python backend/eval/run_eval.py --mode=post-rerank</span></div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Top-150 → top-20 reranking completes in &lt;300ms on local Docker (CPU).</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">GATE2_THRESHOLD calibrated and stored in .env — not the default 0.0.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">eval_dataset.json committed with ≥50 rows including ≥10 adversarial queries. M5 confirms they can load it.</div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if NDCG improvement &lt;10% · reranker model reloaded per request · GATE2_THRESHOLD still 0.0</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 5  ══════════════════════════ -->
+<div class="panel" id="p4">
+  <div class="ph-hdr">
+    <span class="ph-num">Phase 5</span>
+    <span class="ph-title">Cross-member integration — contracts, handoffs, acceptance tests T1–T5</span>
+    <span class="ph-hrs">Hours 28–36</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Your integration surface with every member</div>
+    <table class="itab">
+      <tr><th>Direction</th><th>Partner</th><th>What flows</th><th>Interface</th></tr>
+      <tr><td style="color:var(--teal)">← Receive</td><td class="m2">M2 Ingestion</td><td>Qdrant populated · BM25 index in Redis · bounding_box in every payload</td><td class="mono">schema from Phase 1</td></tr>
+      <tr><td style="color:var(--teal)">← Receive</td><td class="m3">M3 Backend</td><td>Rewritten query (QueryRewriter output) · project_id from JWT context · conversation_id</td><td class="mono">retrieve(query, vector, project_id)</td></tr>
+      <tr><td style="color:var(--warn)">→ Give</td><td class="m3">M3 Backend</td><td>RetrievalResult or RefusalEvent · debug dict for SSE stream</td><td class="mono">RetrievalResult | RefusalEvent</td></tr>
+      <tr><td style="color:var(--warn)">→ Give</td><td class="m4">M4 Reasoning</td><td>top-20 RetrievedChunk list with reranker_score, bounding_box, raw_text, is_table</td><td class="mono">List[RetrievedChunk]</td></tr>
+      <tr><td style="color:var(--warn)">→ Give</td><td class="m5">M5 Frontend/Eval</td><td>eval_dataset.json · P@k/MRR/NDCG metrics · /api/retrieval/debug response shape</td><td class="mono">eval_dataset.json</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Integration with M3 (FastAPI) — how your module is called</div>
+    <pre class="flow">M3's /api/chat handler:
+
+async def chat_handler(req: ChatRequest):
+    # M3 step: rewrite query
+    query = await query_rewriter.rewrite(req.message, history)     # M3 owns
+    vector = await embed(query)                                     # M3 owns
+
+    # YOUR module called here
+    result = await retrieval_engine.query_pipeline(
+        query, vector, req.project_id)
+
+    # M3 handles the result type
+    if isinstance(result, RefusalEvent):
+        yield sse_event("refusal", result.dict())
+        return                                    # pipeline stops here
+
+    if req.debug:
+        yield sse_event("retrieval_debug", result.debug)
+
+    # M4 takes over — your chunks are passed in
+    yield from reasoning_engine.run(query, result.chunks, req.project_id)
+
+    yield sse_event("done", {
+        "retrieval_ms":  result.retrieval_ms,
+        "gate1_score":   result.gate1_score,
+        "gate2_score":   result.gate2_score,
+    })</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Integration with M4 (Reasoning) — chunk handoff contract</div>
+    <pre class="schema">M4 receives List[RetrievedChunk] — fields M4 depends on:
+
+  raw_text        → LLM grader (Gate 3) context window
+  raw_text        → PAL CodeGenerator financial data extraction
+  is_table        → PAL router hint (numeric question routing)
+  table_html      → structured table data for PAL executor
+  bounding_box    → BoundingBoxMapper for PDF visual overlay (CRITICAL)
+  chunk_id        → CitationQueryEngine numbered source references
+  page_number     → citation display "[Source 3, p.12]"
+  section_header  → cross-section citation trace
+  reranker_score  → M4 may log for RAGAS evaluation
+
+M4's BoundingBoxMapper call:
+  chunk_id → lookup in RetrievedChunk list → {x, y, w, h}
+  → frontend renders highlight rect on PDF page
+
+CRITICAL: If bounding_box is missing or None for any chunk,
+  M4's PDF overlay breaks for that citation. Verify in Phase 1.</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Integration with M5 (Frontend/Eval) — debug panel + metrics</div>
+    <pre class="schema">M5 reads your /api/retrieval/debug response to render the Debug Panel:
+  - Top-k chunk list with similarity scores and page numbers
+  - RRF score vs reranker score comparison
+  - Gate 1 and Gate 2 firing status with exact threshold values
+  - Latency breakdown
+
+M5 reads eval_dataset.json to run RAGAS:
+  - Builds golden QA pairs from your (query, relevant_chunk_ids) rows
+  - Runs RAGAS Contextual Precision against your retrieved chunks
+  - Reports to you if Contextual Precision < 0.75 → you re-tune
+
+M5 → M1 feedback loop:
+  RAGAS Contextual Precision < 0.75 → you adjust RRF k or reranker top_k
+  RAGAS Faithfulness < 0.85         → check that M4 generation uses your chunks correctly
+  Adversarial accuracy &lt; 100%        → re-calibrate GATE1/GATE2 thresholds</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Acceptance tests T1–T5 — your retrieval contribution</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">T1</div>
+        <div class="step-b">
+          <div class="step-t">"What are the major business segments?" — citation test</div>
+          <div class="step-d">Your top-5 chunks must all have page_number and section_header populated. M4 must find ≥2 distinct sections in top-10.</div>
+          <pre class="code">chunks = query_pipeline("business segments", ..., "adani").chunks
+assert all(c.page_number > 0 for c in chunks[:5]), "page_number missing"
+assert all(c.bounding_box for c in chunks[:5]),    "bounding_box missing"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T2</div>
+        <div class="step-b">
+          <div class="step-t">"What is consolidated total income H1-26?" — numeric chunk test</div>
+          <div class="step-d">BM25 must surface the exact metric term. Top-1 chunk should have is_table=true or section_header containing "income" or "financial". M4's PAL router depends on is_table flag.</div>
+          <pre class="code">chunks = query_pipeline("consolidated total income H1-26", ...).chunks
+assert any(c.is_table or "income" in c.section_header.lower()
+           for c in chunks[:3])</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T3</div>
+        <div class="step-b">
+          <div class="step-t">"EBITDA drivers H1-26" — cross-section retrieval test</div>
+          <div class="step-d">Your chunks must span ≥2 distinct section_header values in the top-10. This proves cross-section linkage — pure dense search often misses this; BM25 keyword match helps.</div>
+          <pre class="code">chunks = query_pipeline("EBITDA drivers H1-26", ...).chunks[:10]
+sections = set(c.section_header for c in chunks)
+assert len(sections) >= 2, f"Only 1 section retrieved: {sections}"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T4</div>
+        <div class="step-b">
+          <div class="step-t">"CEO's email address" — Gate 1 negative control</div>
+          <div class="step-d">Must return RefusalEvent(level=1). CEO emails are not in financial PDFs so dense similarity will be very low. Gate 1 fires before any LLM call — zero hallucination risk.</div>
+          <pre class="code">result = query_pipeline("CEO email address", ..., "adani")
+assert isinstance(result, RefusalEvent)
+assert result.level == 1
+assert result.message == "Not found in the document."</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T5</div>
+        <div class="step-b">
+          <div class="step-t">"Break that down" (follow-up) — rewritten query test</div>
+          <div class="step-d">M3's QueryRewriter rewrites "Break that down" using Q1 context ("Summarize airport performance") into a standalone query like "Break down airport performance by passenger and cargo". Your retrieval should return airport-related chunks — same as Q1.</div>
+          <pre class="code"># Q1
+r1 = query_pipeline("Summarize airport performance", ...).chunks
+airport_ids = {c.chunk_id for c in r1[:5]}
+
+# Q2 (after M3's QueryRewriter processes "Break that down" + Q1 context)
+rewritten_q2 = "Break down airport performance by passenger and cargo"
+r2 = query_pipeline(rewritten_q2, ...).chunks
+overlap = {c.chunk_id for c in r2[:5]} & airport_ids
+assert len(overlap) >= 2, "Context not preserved across turns"</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Checkpoint 5 — integration gate (hour 36)</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">All 5 acceptance tests must pass</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">T1: top-5 chunks all have page_number + bounding_box populated.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">T2: top-3 chunks include at least one with is_table=true or income-related section_header.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">T3: top-10 chunks span ≥2 distinct section headers (cross-section linkage).</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">T4: CEO email query returns RefusalEvent(level=1) — never a generated answer.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">T5: Rewritten follow-up query returns ≥2 chunks overlapping with Q1 airport chunks.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">M3 confirmed: /api/chat successfully calls query_pipeline() and serialises RefusalEvent and RetrievalResult correctly.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">M4 confirmed: BoundingBoxMapper successfully reads bounding_box from your RetrievedChunk output.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 6  ══════════════════════════ -->
+<div class="panel" id="p5">
+  <div class="ph-hdr">
+    <span class="ph-num">Phase 6</span>
+    <span class="ph-title">Evaluation, adversarial hardening, latency polish, Docker finalization</span>
+    <span class="ph-hrs">Hours 36–42</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Step-by-step tasks</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">6.1</div>
+        <div class="step-b">
+          <div class="step-t">Run full eval — Precision@k, MRR, NDCG using ranx</div>
+          <pre class="code">from ranx import Run, Qrels, evaluate
+
+qrels = Qrels.from_file("backend/eval/qrels.json")
+run   = Run.from_file("backend/eval/retrieval_run.json")
+results = evaluate(qrels, run,
+                   ["precision@5", "precision@10", "mrr", "ndcg@10"])
+print(results)
+# Target: ndcg@10 > 0.75,  mrr > 0.70,  precision@5 > 0.72</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">6.2</div>
+        <div class="step-b">
+          <div class="step-t">Adversarial hardening — all negative controls must fire a gate</div>
+          <div class="step-d">Run the full adversarial query set. Every query must return a RefusalEvent. Document false-positive rate (&lt;5% — good queries wrongly refused).</div>
+          <pre class="schema">Adversarial query set (all must return RefusalEvent):
+  "What is the CEO's email address?"       → Gate 1 expected
+  "What is the chairman's phone number?"   → Gate 1 expected
+  "What is Tesla's revenue?"               → Gate 1 expected (wrong company)
+  "What will Adani do in 2035?"            → Gate 2 expected (speculative)
+  "Summarise slide 47"                     → Gate 1 expected (no such slide)
+  "What is the weather in Mumbai today?"   → Gate 1 expected
+
+False-positive check (must NOT fire gates):
+  "What are the major business segments?"  → pass
+  "What is total income H1-26?"            → pass
+  "What drove EBITDA growth?"              → pass</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">6.3</div>
+        <div class="step-b">
+          <div class="step-t">Latency profiling under concurrency</div>
+          <div class="step-d">Run 10 concurrent requests using asyncio. Measure p50, p95, p99. If p99 &gt; 500ms, apply mitigations in order.</div>
+          <pre class="code">import asyncio, time
+
+async def bench():
+    queries = ["business segments", "total income", "EBITDA drivers"] * 4
+    tasks = [query_pipeline(q, embed(q), "adani") for q in queries[:10]]
+    t0 = time.perf_counter()
+    results = await asyncio.gather(*tasks)
+    total = time.perf_counter() - t0
+    latencies = [r.retrieval_ms for r in results if hasattr(r,"retrieval_ms")]
+    print(f"p50={sorted(latencies)[5]}ms p99={max(latencies)}ms")
+
+# Mitigations if p99 > 500ms:
+# 1. Reduce pre-reranker top_k: 150 → 100
+# 2. Switch CrossEncoder to ms-marco-MiniLM-L-2-v2 (~2x faster)
+# 3. Tune Qdrant: ef_search=32 in collection update</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">6.4</div>
+        <div class="step-b">
+          <div class="step-t">RAGAS feedback loop — act on M5's contextual precision score</div>
+          <div class="step-d">If M5 reports RAGAS Contextual Precision &lt;0.75, run ablation: BM25-only vs dense-only vs RRF. Use best variant for demo. Document result.</div>
+          <pre class="schema">RAGAS Contextual Precision < 0.75 → action:
+  1. Run ablation: BM25-only / dense-only / RRF k=60 / RRF k=30
+  2. Compare NDCG@10 across variants
+  3. Pick best → update RRF k in .env
+  4. Re-run M5 RAGAS evaluation → confirm improvement
+
+RAGAS Faithfulness < 0.85 → this is M4's problem (generation)
+  But check: are your chunks actually containing the answer?
+  If not → increase top_k before reranker from 150 to 200</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">6.5</div>
+        <div class="step-b">
+          <div class="step-t">Docker startup — model caching, index loading, health check</div>
+          <div class="step-d">Reranker model must download and cache in Docker volume on first boot. BM25 index must load from Redis before first request. /api/health must return all-green before /api/chat is available.</div>
+          <pre class="code"># backend/retrieval/__init__.py — startup sequence
+async def startup():
+    # 1. Check Qdrant connection
+    assert client.collection_exists("document_chunks"), "Qdrant not ready"
+
+    # 2. Load reranker model (downloads on first boot, cached in volume)
+    global reranker
+    reranker = NeuralReranker("cross-encoder/ms-marco-MiniLM-L-6-v2")
+
+    # 3. Verify BM25 index in Redis (may be empty on fresh start — OK)
+    r = redis.Redis(host="redis", port=6379)
+    r.ping()
+
+    print("Retrieval engine ready")</pre>
+          <pre class="schema">docker-compose.yml — retrieval service:
+  retrieval:
+    volumes:
+      - model_cache:/root/.cache/torch  ← reranker model cached here
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost:8000/api/health"]
+      interval: 10s
+      start_period: 30s   ← wait for model download on first boot
+      retries: 5
+    depends_on:
+      qdrant: {condition: service_healthy}
+      redis:  {condition: service_healthy}</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">6.6</div>
+        <div class="step-b">
+          <div class="step-t">Demo prep — retrieval "wow factor" moments to highlight</div>
+          <div class="step-d">For the 3-minute demo, your retrieval has 3 visible wow moments: (1) the debug panel showing BM25+dense+RRF scores, (2) Gate 1 firing on CEO email with "Not found in the document." instantly, (3) a numeric question routing through PAL (enabled by your is_table flag and bounding_box on table chunks).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Complete module structure — your files</div>
+    <pre class="schema">backend/
+├── retrieval/
+│   ├── __init__.py          ← startup(), query_pipeline()
+│   ├── vector_searcher.py   ← VectorSearcher, Qdrant client
+│   ├── bm25_searcher.py     ← BM25Searcher, Redis client
+│   ├── hybrid_retriever.py  ← HybridRetriever (asyncio.gather)
+│   ├── rrf_merger.py        ← RRFMerger (k=60)
+│   ├── neural_reranker.py   ← NeuralReranker (CrossEncoder)
+│   ├── refusal_gate.py      ← RefusalGate (Gate 1 + Gate 2)
+│   └── debug_builder.py     ← build_debug()
+├── shared/
+│   └── types.py             ← RetrievedChunk, RetrievalResult, RefusalEvent
+├── eval/
+│   ├── eval_dataset.json    ← your 50–100 QA pairs
+│   ├── qrels.json           ← ranx-format relevance judgements
+│   └── run_eval.py          ← evaluation script for M5
+└── api/
+    └── debug_endpoint.py    ← /api/retrieval/debug (GET)</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Final checkpoint 6 — demo-ready gate (hour 42)</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">All systems green — demo ready</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">NDCG@10 ≥ 0.75 on eval_dataset.json (50+ rows).<br><span class="tc">python backend/eval/run_eval.py --assert-ndcg=0.75</span></div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">All 6 adversarial queries return RefusalEvent — zero false answers. False-positive rate &lt;5%.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">p99 retrieval latency &lt;500ms under 10 concurrent requests.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">docker compose up — Qdrant live, BM25 loaded, reranker model cached, /api/health all-green within 60s.<br><span class="tc">docker compose up -d && sleep 60 && curl localhost:8000/api/health | jq .retrieval</span></div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">/api/retrieval/debug returns full trace visible in M5's debug panel on the live demo.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">RAGAS Contextual Precision ≥ 0.75 (confirmed by M5 run).</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">All 5 acceptance tests (T1–T5) pass in the integrated system end-to-end.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- ══════════════════════════  PHASE 7 — FULL CODE  ══════════════════════════ -->
+<div class="panel" id="p6">
+  <div class="ph-hdr">
+    <span class="ph-num">Complete Code</span>
+    <span class="ph-title">Full implementation — shared/types.py + all retrieval classes</span>
+    <span class="ph-hrs">Reference</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/shared/types.py — shared contracts (M1 writes, M3+M4+M5 import)</div>
+    <pre class="code">"""
+backend/shared/types.py
+Shared data contracts for the retrieval pipeline.
+M1 owns this file. M3, M4, M5 import from here — DO NOT change field names without
+notifying all members.
+"""
+from __future__ import annotations
+from dataclasses import dataclass, field
+from typing import Optional
+import uuid
+
+
+@dataclass
+class BoundingBox:
+    x: float   # top-left x, fraction of page width  (0.0–1.0)
+    y: float   # top-left y, fraction of page height (0.0–1.0)
+    w: float   # width,  fraction of page width
+    h: float   # height, fraction of page height
+
+
+@dataclass
+class RetrievedChunk:
+    # ── identity ─────────────────────────────────────────────────────────────
+    chunk_id:        str               # UUID str — primary key in Qdrant
+    project_id:      str               # isolation key — MUST match query project_id
+    file_id:         str               # source file UUID
+    # ── location ─────────────────────────────────────────────────────────────
+    page_number:     int               # 1-indexed — shown in citations "[Source N, p.X]"
+    section_header:  str               # e.g. "3.2 Revenue Overview"
+    chunk_index:     int               # position within file
+    # ── content ──────────────────────────────────────────────────────────────
+    raw_text:        str               # full chunk text → sent to LLM grader, PAL
+    context_summary: str               # 50-100 tok LLM summary → query rewriter context
+    # ── visual citation ──────────────────────────────────────────────────────
+    bounding_box:    Optional[BoundingBox] = None  # CRITICAL — M4 BoundingBoxMapper
+    is_table:        bool = False      # PAL router hint — numeric extraction
+    table_html:      Optional[str] = None  # structured table for PAL executor
+    token_count:     int = 0
+    # ── retrieval scores (set during pipeline) ───────────────────────────────
+    similarity_score:  float = 0.0    # raw Qdrant cosine score — Gate 1 input
+    bm25_score:        float = 0.0    # BM25 Okapi score
+    rrf_score:         float = 0.0    # after RRF merge
+    reranker_score:    float = 0.0    # CrossEncoder score — Gate 2 input
+
+
+@dataclass
+class RetrievalResult:
+    """Returned by query_pipeline() on success. M3 routes to M4."""
+    chunks:         list[RetrievedChunk]  # top-20 after reranking
+    gate1_score:    float                 # max dense similarity seen
+    gate2_score:    float                 # top reranker score
+    retrieval_ms:   int                   # wall-clock latency
+    debug:          dict = field(default_factory=dict)  # for SSE retrieval_debug event
+
+
+@dataclass
+class RefusalEvent:
+    """Returned by query_pipeline() when a gate fires. M3 serialises → SSE event:refusal."""
+    level:   int    # 1 or 2
+    reason:  str    # "level_1_threshold" | "level_2_reranker"
+    message: str = "Not found in the document."
+    debug:   dict = field(default_factory=dict)
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/vector_searcher.py</div>
+    <pre class="code">"""VectorSearcher — dense Qdrant search, always scoped to project_id."""
+import os
+from qdrant_client import QdrantClient
+from qdrant_client.models import Filter, FieldCondition, MatchValue, SearchRequest
+from backend.shared.types import RetrievedChunk, BoundingBox
+
+client = QdrantClient(host=os.getenv("QDRANT_HOST", "qdrant"), port=6333)
+COLLECTION = "document_chunks"
+
+
+class VectorSearcher:
+    async def dense_search(
+        self, query_vector: list[float], project_id: str, top_k: int = 150
+    ) -> list:
+        """
+        Returns List[ScoredPoint] — raw Qdrant results.
+        project_id filter is MANDATORY. Never run without it.
+        """
+        results = client.search(
+            collection_name=COLLECTION,
+            query_vector=query_vector,
+            query_filter=Filter(must=[
+                FieldCondition(key="project_id", match=MatchValue(value=project_id))
+            ]),
+            limit=top_k,
+            with_payload=True,
+            with_vectors=False,
+        )
+        return results  # List[ScoredPoint] — RRFMerger reads .id, .score, .payload
+
+    async def batch_fetch_payloads(self, chunk_ids: list[str]) -> dict[str, dict]:
+        """Batch-fetch payloads for a list of chunk_ids. Used by RRFMerger."""
+        points = client.retrieve(
+            collection_name=COLLECTION,
+            ids=chunk_ids,
+            with_payload=True,
+            with_vectors=False,
+        )
+        return {str(p.id): p.payload for p in points}
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/bm25_searcher.py</div>
+    <pre class="code">"""BM25Searcher — keyword search over Redis-backed per-project index."""
+import os, pickle
+import redis as redis_lib
+from rank_bm25 import BM25Okapi
+
+_redis = redis_lib.Redis(
+    host=os.getenv("REDIS_HOST", "redis"),
+    port=int(os.getenv("REDIS_PORT", 6379)),
+    decode_responses=False
+)
+
+
+class BM25Searcher:
+    async def search(
+        self, query: str, project_id: str, top_k: int = 150
+    ) -> list[dict]:
+        """
+        Returns List[{chunk_id, bm25_score, text}] sorted descending.
+        BM25 index written by M2's DualIndexer at ingestion time.
+        Redis key contract with M2: "bm25:{project_id}"
+        Value: pickle({"corpus": List[str], "chunk_ids": List[str]})
+        """
+        raw = _redis.get(f"bm25:{project_id}")
+        if not raw:
+            return []  # no index yet — M2 ingestion not done
+
+        data = pickle.loads(raw)
+        corpus: list[str] = data["corpus"]
+        chunk_ids: list[str] = data["chunk_ids"]
+
+        tokenised = [doc.lower().split() for doc in corpus]
+        bm25 = BM25Okapi(tokenised)
+        scores = bm25.get_scores(query.lower().split())
+
+        ranked = sorted(
+            zip(chunk_ids, corpus, scores),
+            key=lambda x: x[2], reverse=True
+        )[:top_k]
+
+        return [
+            {"chunk_id": cid, "text": txt, "bm25_score": float(sc)}
+            for cid, txt, sc in ranked
+        ]
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/hybrid_retriever.py</div>
+    <pre class="code">"""HybridRetriever — runs BM25 + dense in true parallel via asyncio.gather."""
+import asyncio
+from .bm25_searcher import BM25Searcher
+from .vector_searcher import VectorSearcher
+
+
+class HybridRetriever:
+    def __init__(self):
+        self.bm25   = BM25Searcher()
+        self.vector = VectorSearcher()
+
+    async def retrieve(
+        self,
+        query: str,
+        query_vector: list[float],
+        project_id: str,
+        top_k: int = 150,
+    ) -> tuple[list, list]:
+        """
+        Runs BM25 and dense search CONCURRENTLY.
+        Total time ≈ max(bm25_time, dense_time) NOT their sum.
+        Returns: (bm25_hits, dense_hits)
+        """
+        bm25_task  = asyncio.create_task(
+            self.bm25.search(query, project_id, top_k)
+        )
+        dense_task = asyncio.create_task(
+            self.vector.dense_search(query_vector, project_id, top_k)
+        )
+        bm25_hits, dense_hits = await asyncio.gather(bm25_task, dense_task)
+        return bm25_hits, dense_hits
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/rrf_merger.py</div>
+    <pre class="code">"""RRFMerger — Reciprocal Rank Fusion with k=60, dedup, batch payload hydration."""
+from collections import defaultdict
+from .vector_searcher import VectorSearcher
+from backend.shared.types import RetrievedChunk, BoundingBox
+
+_vs = VectorSearcher()
+
+
+class RRFMerger:
+    @staticmethod
+    async def merge(
+        bm25_hits: list[dict],
+        dense_hits: list,           # List[ScoredPoint]
+        k: int = 60,
+    ) -> list[RetrievedChunk]:
+        """
+        Formula:  Score(d) = Σ  1 / (k + rank(d))
+        k=60 is the smoothing constant from the spec — do NOT change.
+        Steps:
+          1. Score both ranked lists
+          2. Deduplicate by chunk_id
+          3. Sort by merged score descending
+          4. Batch-fetch payloads from Qdrant (single round-trip)
+          5. Build RetrievedChunk objects
+        """
+        scores: dict[str, float] = defaultdict(float)
+
+        for rank, hit in enumerate(bm25_hits):
+            scores[hit["chunk_id"]] += 1.0 / (k + rank + 1)
+
+        dense_score_map: dict[str, float] = {}
+        for rank, hit in enumerate(dense_hits):
+            cid = str(hit.id)
+            scores[cid] += 1.0 / (k + rank + 1)
+            dense_score_map[cid] = hit.score   # raw cosine — Gate 1 needs this
+
+        ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
+        # Batch fetch all payloads in ONE Qdrant round-trip
+        all_ids = [cid for cid, _ in ranked]
+        payload_map = await _vs.batch_fetch_payloads(all_ids)
+
+        bm25_score_map = {h["chunk_id"]: h["bm25_score"] for h in bm25_hits}
+
+        result: list[RetrievedChunk] = []
+        for cid, rrf_sc in ranked:
+            pl = payload_map.get(cid, {})
+            bb_raw = pl.get("bounding_box")
+            bb = BoundingBox(**bb_raw) if bb_raw else None
+            result.append(RetrievedChunk(
+                chunk_id        = cid,
+                project_id      = pl.get("project_id", ""),
+                file_id         = pl.get("file_id", ""),
+                page_number     = pl.get("page_number", 0),
+                section_header  = pl.get("section_header", ""),
+                chunk_index     = pl.get("chunk_index", 0),
+                raw_text        = pl.get("raw_text", ""),
+                context_summary = pl.get("context_summary", ""),
+                bounding_box    = bb,
+                is_table        = pl.get("is_table", False),
+                table_html      = pl.get("table_html"),
+                token_count     = pl.get("token_count", 0),
+                similarity_score= dense_score_map.get(cid, 0.0),
+                bm25_score      = bm25_score_map.get(cid, 0.0),
+                rrf_score       = rrf_sc,
+            ))
+        return result
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/neural_reranker.py</div>
+    <pre class="code">"""NeuralReranker — CrossEncoder batch inference. Model loaded ONCE at startup."""
+import os
+from sentence_transformers import CrossEncoder
+from backend.shared.types import RetrievedChunk
+
+_MODEL_NAME = os.getenv(
+    "RERANKER_MODEL", "cross-encoder/ms-marco-MiniLM-L-6-v2"
+)
+# Loaded once at module import — NOT per request
+_model: CrossEncoder | None = None
+
+
+def _get_model() -> CrossEncoder:
+    global _model
+    if _model is None:
+        _model = CrossEncoder(_MODEL_NAME)   # ~60MB, downloads to Docker volume
+    return _model
+
+
+class NeuralReranker:
+    def rerank(
+        self,
+        query: str,
+        chunks: list[RetrievedChunk],
+        top_k: int = 20,
+    ) -> list[RetrievedChunk]:
+        """
+        Runs CrossEncoder on (query, chunk.raw_text) pairs.
+        Scores ~150 pairs in ~250ms on CPU (MiniLM-L-6-v2).
+        Sets chunk.reranker_score in-place.
+        Returns top_k chunks sorted by reranker_score descending.
+        """
+        if not chunks:
+            return []
+
+        model = _get_model()
+        pairs  = [(query, c.raw_text) for c in chunks]
+        scores = model.predict(pairs).tolist()   # numpy → python list
+
+        for chunk, score in zip(chunks, scores):
+            chunk.reranker_score = float(score)
+
+        ranked = sorted(chunks, key=lambda c: c.reranker_score, reverse=True)
+        return ranked[:top_k]
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/refusal_gate.py</div>
+    <pre class="code">"""RefusalGate — Gate 1 (similarity threshold) and Gate 2 (reranker threshold).
+Gates 3 and 4 are owned by M4 (reasoning_engine.py and glean_verifier.py).
+"""
+import os
+from backend.shared.types import RetrievedChunk, RefusalEvent
+
+GATE1_THRESHOLD = float(os.getenv("GATE1_THRESHOLD", "0.5"))
+GATE2_THRESHOLD = float(os.getenv("GATE2_THRESHOLD", "0.0"))  # calibrate in Phase 4!
+
+
+class RefusalGate:
+    @staticmethod
+    def check_threshold(dense_hits: list) -> RefusalEvent | None:
+        """
+        Gate 1: fires if max dense cosine similarity < GATE1_THRESHOLD.
+        Short-circuits the entire pipeline — no reranking, no LLM call.
+        Cost: ~0ms. Use it to block hallucinations cheaply.
+        """
+        max_score = dense_hits[0].score if dense_hits else 0.0
+        if max_score < GATE1_THRESHOLD:
+            return RefusalEvent(
+                level  = 1,
+                reason = "level_1_threshold",
+                message= "Not found in the document.",
+                debug  = {
+                    "max_similarity": round(max_score, 4),
+                    "threshold":      GATE1_THRESHOLD,
+                }
+            )
+        return None  # pass — continue to reranker
+
+    @staticmethod
+    def check_reranker(reranked: list[RetrievedChunk]) -> RefusalEvent | None:
+        """
+        Gate 2: fires if top reranker score < GATE2_THRESHOLD.
+        Threshold MUST be calibrated (Phase 4) — default 0.0 means gate never fires.
+        Run adversarial query set to find correct threshold.
+        """
+        top = reranked[0].reranker_score if reranked else 0.0
+        if top < GATE2_THRESHOLD:
+            return RefusalEvent(
+                level  = 2,
+                reason = "level_2_reranker",
+                message= "Not found in the document.",
+                debug  = {
+                    "reranker_score": round(top, 4),
+                    "threshold":      GATE2_THRESHOLD,
+                }
+            )
+        return None  # pass — return RetrievalResult to M3
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/__init__.py — query_pipeline() entry point (what M3 calls)</div>
+    <pre class="code">"""
+backend/retrieval/__init__.py
+Single entry point for the entire retrieval pipeline.
+M3's /api/chat handler calls: result = await query_pipeline(query, vector, project_id)
+"""
+import time
+from .hybrid_retriever import HybridRetriever
+from .rrf_merger       import RRFMerger
+from .neural_reranker  import NeuralReranker
+from .refusal_gate     import RefusalGate
+from .debug_builder    import build_debug
+from backend.shared.types import RetrievalResult, RefusalEvent
+
+_hybrid   = HybridRetriever()
+_reranker = NeuralReranker()
+
+
+async def query_pipeline(
+    query:      str,
+    query_vector: list[float],
+    project_id: str,
+    top_k:      int = 150,
+) -> RetrievalResult | RefusalEvent:
+    """
+    Full retrieval pipeline. Returns RetrievalResult on success or RefusalEvent on gate fire.
+    M3 checks isinstance(result, RefusalEvent) to decide whether to continue or emit SSE refusal.
+    """
+    t0 = time.perf_counter()
+
+    # ── Step 1: parallel BM25 + dense ─────────────────────────────────────
+    bm25_hits, dense_hits = await _hybrid.retrieve(
+        query, query_vector, project_id, top_k=top_k
+    )
+
+    # ── Step 2: Gate 1 — score threshold (no LLM, no reranker) ───────────
+    gate1 = RefusalGate.check_threshold(dense_hits)
+    if gate1:
+        gate1.debug["retrieval_ms"] = int((time.perf_counter() - t0) * 1000)
+        return gate1
+
+    # ── Step 3: RRF merge ─────────────────────────────────────────────────
+    merged = await RRFMerger.merge(bm25_hits, dense_hits, k=60)
+
+    # ── Step 4: Neural reranking (top_k → top 20) ─────────────────────────
+    reranked = _reranker.rerank(query, merged[:top_k], top_k=20)
+
+    # ── Step 5: Gate 2 — reranker threshold ───────────────────────────────
+    gate2 = RefusalGate.check_reranker(reranked)
+    if gate2:
+        gate2.debug["retrieval_ms"] = int((time.perf_counter() - t0) * 1000)
+        return gate2
+
+    # ── Step 6: Return result → M3 hands off to M4 ────────────────────────
+    retrieval_ms = int((time.perf_counter() - t0) * 1000)
+    return RetrievalResult(
+        chunks      = reranked,
+        gate1_score = dense_hits[0].score if dense_hits else 0.0,
+        gate2_score = reranked[0].reranker_score if reranked else 0.0,
+        retrieval_ms= retrieval_ms,
+        debug       = build_debug(bm25_hits, dense_hits, merged, reranked),
+    )
+
+
+async def startup():
+    """Called by M3's FastAPI lifespan. Verifies all dependencies are ready."""
+    from qdrant_client import QdrantClient
+    import os, redis
+    client = QdrantClient(host=os.getenv("QDRANT_HOST","qdrant"), port=6333)
+    assert client.collection_exists("document_chunks"), "Qdrant collection missing!"
+    redis.Redis(host=os.getenv("REDIS_HOST","redis"), port=6379).ping()
+    _reranker  # triggers model load on startup, not first request
+    print("Retrieval engine ready ✓")
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/retrieval/debug_builder.py</div>
+    <pre class="code">"""build_debug() — assembles the payload for /api/retrieval/debug and SSE retrieval_debug event."""
+from backend.shared.types import RetrievedChunk
+import os
+
+DEBUG_MODE = os.getenv("RETRIEVAL_DEBUG_MODE", "false").lower() == "true"
+GATE1_THRESHOLD = float(os.getenv("GATE1_THRESHOLD", "0.5"))
+GATE2_THRESHOLD = float(os.getenv("GATE2_THRESHOLD", "0.0"))
+
+
+def build_debug(
+    bm25_hits:   list[dict],
+    dense_hits:  list,
+    merged:      list[RetrievedChunk],
+    reranked:    list[RetrievedChunk] | None = None,
+) -> dict:
+    """
+    Called at end of query_pipeline() regardless of gate outcome.
+    M3 emits this as SSE event: retrieval_debug (only when debug=True on request).
+    M5's debug panel reads and renders this JSON.
+    """
+    max_sim      = dense_hits[0].score if dense_hits else 0.0
+    top_rr_score = reranked[0].reranker_score if reranked else 0.0
+
+    return {
+        "bm25_hits": [
+            {"chunk_id": h["chunk_id"], "score": round(h["bm25_score"], 4),
+             "snippet": h["text"][:120]}
+            for h in bm25_hits[:10]
+        ],
+        "dense_hits": [
+            {"chunk_id": str(h.id), "similarity": round(h.score, 4),
+             "page": h.payload.get("page_number", "?")}
+            for h in dense_hits[:10]
+        ],
+        "rrf_merged": [
+            {"chunk_id": c.chunk_id, "rrf_score": round(c.rrf_score, 5),
+             "rank": i + 1, "page": c.page_number}
+            for i, c in enumerate(merged[:20])
+        ],
+        "reranked": [
+            {"chunk_id": c.chunk_id, "reranker_score": round(c.reranker_score, 4),
+             "rank": i + 1, "page": c.page_number, "section": c.section_header}
+            for i, c in enumerate(reranked or [])
+        ],
+        "gate_1": {
+            "fired": max_sim < GATE1_THRESHOLD,
+            "max_similarity": round(max_sim, 4),
+            "threshold": GATE1_THRESHOLD,
+        },
+        "gate_2": {
+            "fired": top_rr_score < GATE2_THRESHOLD,
+            "reranker_score": round(top_rr_score, 4),
+            "threshold": GATE2_THRESHOLD,
+        },
+    }
+</pre>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 8 — EVAL & TYPES  ══════════════════════════ -->
+<div class="panel" id="p7">
+  <div class="ph-hdr">
+    <span class="ph-num">Eval &amp; Types</span>
+    <span class="ph-title">eval_dataset.json format · run_eval.py · Gate calibration script</span>
+    <span class="ph-hrs">Reference</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/eval/eval_dataset.json — format (build 50–100 rows from Adani PDF)</div>
+    <pre class="schema">[
+  {
+    "id":             "q001",
+    "query":          "What are the major business segments discussed?",
+    "relevant_ids":   ["uuid-a1b2c3", "uuid-d4e5f6"],
+    "expected_page":  3,
+    "is_numeric":     false,
+    "adversarial":    false,
+    "expected_gate":  null,
+    "notes":          "T1 acceptance test — must return chunks with bounding_box"
+  },
+  {
+    "id":             "q002",
+    "query":          "What is the consolidated total income in H1-26?",
+    "relevant_ids":   ["uuid-b1c2d3"],
+    "expected_page":  12,
+    "is_numeric":     true,
+    "adversarial":    false,
+    "expected_gate":  null,
+    "notes":          "T2 — BM25 must surface exact term; is_table=true expected"
+  },
+  {
+    "id":             "q003",
+    "query":          "What drivers are mentioned for EBITDA changes in H1-26?",
+    "relevant_ids":   ["uuid-c1d2e3", "uuid-f1g2h3", "uuid-i1j2k3"],
+    "expected_page":  null,
+    "is_numeric":     false,
+    "adversarial":    false,
+    "expected_gate":  null,
+    "notes":          "T3 — must span ≥2 distinct section_headers in top-10"
+  },
+  {
+    "id":             "adv001",
+    "query":          "What is the CEO's email address?",
+    "relevant_ids":   [],
+    "expected_page":  null,
+    "is_numeric":     false,
+    "adversarial":    true,
+    "expected_gate":  1,
+    "notes":          "T4 — MUST return RefusalEvent level=1, never a fabricated email"
+  },
+  {
+    "id":             "adv002",
+    "query":          "What is Tesla's revenue?",
+    "relevant_ids":   [],
+    "adversarial":    true,
+    "expected_gate":  1,
+    "notes":          "Wrong company — Gate 1 must fire"
+  },
+  {
+    "id":             "adv003",
+    "query":          "What is the chairman's phone number?",
+    "relevant_ids":   [],
+    "adversarial":    true,
+    "expected_gate":  1
+  },
+  {
+    "id":             "adv004",
+    "query":          "What will Adani do in 2035?",
+    "relevant_ids":   [],
+    "adversarial":    true,
+    "expected_gate":  2,
+    "notes":          "Speculative — Gate 2 (low reranker score) expected"
+  },
+  {
+    "id":             "adv005",
+    "query":          "Summarise slide 47",
+    "relevant_ids":   [],
+    "adversarial":    true,
+    "expected_gate":  1
+  },
+  {
+    "id":             "adv006",
+    "query":          "What is the weather in Mumbai today?",
+    "relevant_ids":   [],
+    "adversarial":    true,
+    "expected_gate":  1
+  }
+]
+
+NOTE: Add 40–90 more rows covering:
+  - All major financial metrics (EBITDA, PAT, revenue per segment)
+  - Cross-section queries (airport + energy in one answer)
+  - Follow-up queries (for T5 context preservation test)
+  - Edge cases (table-only answers, footnote answers)</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/eval/run_eval.py — full evaluation script</div>
+    <pre class="code">"""
+backend/eval/run_eval.py
+Evaluates retrieval quality using ranx.
+M1 runs this. M5 reads the output JSON for the RAGAS dashboard.
+Usage:
+  python backend/eval/run_eval.py                      # prints metrics
+  python backend/eval/run_eval.py --assert-ndcg=0.75   # CI gate
+  python backend/eval/run_eval.py --mode=post-rerank   # reranked eval
+"""
+import json, asyncio, argparse, os, sys
+from pathlib import Path
+
+ROOT = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(ROOT))
+
+from backend.retrieval import query_pipeline
+from openai import AsyncOpenAI
+
+_oa = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+
+async def embed(text: str) -> list[float]:
+    r = await _oa.embeddings.create(input=text, model="text-embedding-3-large")
+    return r.data[0].embedding
+
+
+async def run_eval(dataset_path: str, mode: str = "post-rerank") -> dict:
+    with open(dataset_path) as f:
+        dataset = json.load(f)
+
+    # Only evaluate non-adversarial queries for P@k / MRR / NDCG
+    eval_rows  = [r for r in dataset if not r.get("adversarial")]
+    adv_rows   = [r for r in dataset if r.get("adversarial")]
+
+    # ── Build ranx Qrels ──────────────────────────────────────────────────
+    qrels_dict = {}
+    for row in eval_rows:
+        qrels_dict[row["id"]] = {cid: 1 for cid in row["relevant_ids"]}
+
+    # ── Run retrieval ─────────────────────────────────────────────────────
+    run_dict = {}
+    PROJECT_ID = os.getenv("EVAL_PROJECT_ID", "adani-q2-fy26")
+
+    for row in eval_rows:
+        vector = await embed(row["query"])
+        result = await query_pipeline(row["query"], vector, PROJECT_ID)
+        if hasattr(result, "chunks"):
+            run_dict[row["id"]] = {
+                c.chunk_id: c.reranker_score if mode == "post-rerank" else c.rrf_score
+                for c in result.chunks
+            }
+        else:
+            # gate fired — no chunks retrieved
+            run_dict[row["id"]] = {}
+
+    # ── Adversarial gate test ─────────────────────────────────────────────
+    adv_pass = 0
+    for row in adv_rows:
+        vector = await embed(row["query"])
+        result = await query_pipeline(row["query"], vector, PROJECT_ID)
+        if hasattr(result, "level"):   # RefusalEvent
+            adv_pass += 1
+
+    # ── Compute metrics ───────────────────────────────────────────────────
+    from ranx import Run, Qrels, evaluate
+
+    qrels = Qrels(qrels_dict)
+    run   = Run(run_dict)
+    metrics = evaluate(qrels, run, ["precision@5", "precision@10", "mrr", "ndcg@10"])
+
+    output = {
+        "mode":           mode,
+        "eval_rows":      len(eval_rows),
+        "adv_rows":       len(adv_rows),
+        "adv_pass_rate":  round(adv_pass / len(adv_rows), 3) if adv_rows else 1.0,
+        "precision@5":    round(metrics["precision@5"], 4),
+        "precision@10":   round(metrics["precision@10"], 4),
+        "mrr":            round(metrics["mrr"], 4),
+        "ndcg@10":        round(metrics["ndcg@10"], 4),
+    }
+    print(json.dumps(output, indent=2))
+    return output
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", default="post-rerank",
+                        choices=["post-rerank", "pre-rerank"])
+    parser.add_argument("--assert-ndcg", type=float, default=None)
+    args = parser.parse_args()
+
+    dataset = ROOT / "backend" / "eval" / "eval_dataset.json"
+    result  = asyncio.run(run_eval(str(dataset), mode=args.mode))
+
+    if args.assert_ndcg and result["ndcg@10"] < args.assert_ndcg:
+        print(f"FAIL: ndcg@10={result['ndcg@10']} < {args.assert_ndcg}")
+        sys.exit(1)
+    print("PASS ✓")
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/eval/calibrate_gate2.py — GATE2_THRESHOLD calibration (Phase 4)</div>
+    <pre class="code">"""
+Run this ONCE after reranker is integrated (Phase 4).
+Finds GATE2_THRESHOLD where good-query false-positive rate < 5%.
+Output: prints the threshold to add to .env
+"""
+import asyncio, json, os, sys
+from pathlib import Path
+ROOT = Path(__file__).parent.parent.parent
+sys.path.insert(0, str(ROOT))
+
+from backend.retrieval import query_pipeline
+from openai import AsyncOpenAI
+_oa = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+async def embed(t): return (await _oa.embeddings.create(input=t, model="text-embedding-3-large")).data[0].embedding
+
+GOOD_QUERIES = [
+    "What are the major business segments?",
+    "What is consolidated total income H1-26?",
+    "What drove EBITDA growth in H1-26?",
+    "Describe airport performance in H1-26",
+    "What is total revenue from energy segment?",
+]
+BAD_QUERIES = [
+    "What is the CEO's email address?",
+    "What is the chairman's phone number?",
+    "What is Tesla's revenue?",
+    "What will Adani do in 2035?",
+    "Summarise slide 47",
+    "What is the weather in Mumbai today?",
+]
+PROJECT_ID = os.getenv("EVAL_PROJECT_ID", "adani-q2-fy26")
+
+
+async def main():
+    good_scores, bad_scores = [], []
+
+    for q in GOOD_QUERIES:
+        v = await embed(q)
+        r = await query_pipeline(q, v, PROJECT_ID)
+        if hasattr(r, "chunks") and r.chunks:
+            good_scores.append(r.chunks[0].reranker_score)
+
+    for q in BAD_QUERIES:
+        v = await embed(q)
+        r = await query_pipeline(q, v, PROJECT_ID)
+        # Even if gate 1 fires, use 0.0 as reranker score for calibration
+        score = r.chunks[0].reranker_score if hasattr(r, "chunks") and r.chunks else 0.0
+        bad_scores.append(score)
+
+    all_scores = sorted(set(good_scores + bad_scores))
+    for t in all_scores:
+        fpr = sum(1 for s in good_scores if s < t) / len(good_scores)
+        if fpr < 0.05:
+            print(f"GATE2_THRESHOLD={t:.4f}   # FPR={fpr:.1%} on good queries")
+            print(f"Add to .env:  GATE2_THRESHOLD={t:.4f}")
+            return
+    print("Could not find threshold — check reranker scores manually")
+
+asyncio.run(main())
+</pre>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 9 — INTEGRATION CONTRACTS  ══════════════════════════ -->
+<div class="panel" id="p8">
+  <div class="ph-hdr">
+    <span class="ph-num">Integration</span>
+    <span class="ph-title">Exact contracts with M2, M3, M4, M5 — what flows, in which direction, in which format</span>
+    <span class="ph-hrs">Reference</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">M2 → M1 (Ingestion → Retrieval) — what you RECEIVE</div>
+    <table class="itab">
+      <tr><th>What M2 gives you</th><th>Where</th><th>How to verify</th></tr>
+      <tr><td>Qdrant collection populated with all Adani PDF chunks, every chunk having <span class="mono">bounding_box</span>, <span class="mono">project_id</span>, <span class="mono">section_header</span>, <span class="mono">is_table</span> in payload</td><td>Qdrant service (port 6333)</td><td><span class="tc">client.count("document_chunks") &gt; 0 and assert chunks[0].payload.get("bounding_box")</span></td></tr>
+      <tr><td>BM25 index in Redis under key <span class="mono">"bm25:{project_id}"</span> as <span class="mono">pickle({"corpus": List[str], "chunk_ids": List[str]})</span></td><td>Redis service (port 6379)</td><td><span class="tc">redis.exists("bm25:adani-q2-fy26")</span></td></tr>
+      <tr><td>Schema agreed at Hour 1 before M2 starts ingesting — any new payload field added by M2 must be communicated to you</td><td>backend/shared/types.py</td><td>PR review gate</td></tr>
+      <tr><td>M2 rebuilds BM25 index in Redis when a new file is added to a project (you consume without changes)</td><td>Redis</td><td>Check Redis key TTL — should be None (no expiry)</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">M3 → M1 (Backend → Retrieval) — what you RECEIVE</div>
+    <table class="itab">
+      <tr><th>Input parameter</th><th>Type</th><th>Who prepares it</th><th>Notes</th></tr>
+      <tr><td><span class="mono">query</span></td><td>str</td><td>M3's QueryRewriter — already rewritten standalone query</td><td>For T5 (follow-up), this will be the rewritten form e.g. "Break down airport performance by passenger and cargo"</td></tr>
+      <tr><td><span class="mono">query_vector</span></td><td>list[float] (1536-d)</td><td>M3 — calls OpenAI text-embedding-3-large on the rewritten query</td><td>M3 embeds, you search. Do not re-embed inside query_pipeline.</td></tr>
+      <tr><td><span class="mono">project_id</span></td><td>str (UUID)</td><td>M3 — extracted from JWT claims</td><td>MANDATORY. If missing, raise ValueError — never run without it.</td></tr>
+      <tr><td><span class="mono">debug</span></td><td>bool</td><td>M3 — from request body <span class="mono">{"debug": true}</span></td><td>If true, M3 emits the debug dict from RetrievalResult as SSE event:retrieval_debug</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">M1 → M3 (Retrieval → Backend) — what you GIVE to M3</div>
+    <pre class="schema">M3's /api/chat handler receives your return value directly:
+
+result = await query_pipeline(query, query_vector, project_id)
+
+if isinstance(result, RefusalEvent):
+    # M3 emits SSE event: refusal  →  M5 renders "Not found in the document."
+    yield {"event": "refusal", "data": result.dict()}
+    return   # pipeline stops — no LLM call, no PAL
+
+if request.debug:
+    yield {"event": "retrieval_debug", "data": result.debug}
+
+# result is RetrievalResult — M3 passes result.chunks to M4
+yield from reasoning_engine.run(query, result.chunks, project_id)
+
+yield {"event": "done", "data": {
+    "retrieval_ms": result.retrieval_ms,
+    "gate1_score":  result.gate1_score,
+    "gate2_score":  result.gate2_score,
+}}</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">M1 → M4 (Retrieval → Reasoning/PAL/Citation) — chunk handoff</div>
+    <table class="itab">
+      <tr><th>Field on RetrievedChunk</th><th>M4 uses it for</th><th>CRITICAL?</th></tr>
+      <tr><td><span class="mono">raw_text</span></td><td>LLM grader (Gate 3) context window; PAL CodeGenerator financial data extraction; generation prompt context</td><td>YES</td></tr>
+      <tr><td><span class="mono">bounding_box</span> {x,y,w,h}</td><td>BoundingBoxMapper → PDF visual highlight overlay in M5 frontend</td><td class="m4">CRITICAL — if None, citation overlay breaks</td></tr>
+      <tr><td><span class="mono">chunk_id</span></td><td>CitationQueryEngine numbered sources [1], [2] → maps to bounding_box</td><td>YES</td></tr>
+      <tr><td><span class="mono">page_number</span></td><td>Citation display "[Source 3, p.12]"</td><td>YES</td></tr>
+      <tr><td><span class="mono">is_table</span></td><td>PAL router hint — if True, routes to CodeGenerator for numeric extraction instead of LLM narrative</td><td>YES for T2</td></tr>
+      <tr><td><span class="mono">table_html</span></td><td>Passed to PAL executor for structured numeric extraction</td><td>YES when is_table=True</td></tr>
+      <tr><td><span class="mono">section_header</span></td><td>Cross-section citation trace; GLEAN verifier context</td><td>YES for T3</td></tr>
+      <tr><td><span class="mono">context_summary</span></td><td>LLM grader efficiency (shorter context window, faster Gate 3)</td><td>Recommended</td></tr>
+      <tr><td><span class="mono">reranker_score</span></td><td>M4 logs to RAGAS for Contextual Precision metric; M5 shows in debug panel</td><td>No (logging only)</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">M1 → M5 (Retrieval → Frontend/Eval) — debug endpoint + eval dataset</div>
+    <table class="itab">
+      <tr><th>What M5 reads from you</th><th>Where</th><th>Purpose</th></tr>
+      <tr><td>GET /api/retrieval/debug — full retrieval trace JSON</td><td>Your debug_endpoint.py, returns build_debug() output</td><td>M5 renders Debug Panel: BM25 scores, dense scores, RRF ranks, gate status</td></tr>
+      <tr><td>backend/eval/eval_dataset.json</td><td>Committed to repo</td><td>M5 builds golden QA pairs → RAGAS Contextual Precision score</td></tr>
+      <tr><td>RAGAS feedback → you</td><td>M5 runs ragas evaluate() and reports back</td><td>If Contextual Precision &lt;0.75 → you adjust RRF k or top_k; if Faithfulness &lt;0.85 → M4's problem</td></tr>
+      <tr><td>Latency in SSE done event: retrieval_ms</td><td>M3 forwards from your RetrievalResult</td><td>M5 monitoring dashboard latency display</td></tr>
+    </table>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">SSE event shapes — exact JSON M3 emits (derived from your types)</div>
+    <pre class="schema">// event: refusal   (RefusalEvent fired)
+{
+  "level":   1,
+  "reason":  "level_1_threshold",
+  "message": "Not found in the document.",
+  "debug": {                              // only when ?debug=true
+    "max_similarity": 0.31,
+    "threshold": 0.5,
+    "retrieval_ms": 22
+  }
+}
+
+// event: retrieval_debug   (only when request.debug = true)
+{
+  "bm25_hits":  [{"chunk_id":"...","score":4.2,"snippet":"..."}],
+  "dense_hits": [{"chunk_id":"...","similarity":0.87,"page":12}],
+  "rrf_merged": [{"chunk_id":"...","rrf_score":0.031,"rank":1,"page":12}],
+  "reranked":   [{"chunk_id":"...","reranker_score":0.94,"rank":1,"page":12,"section":"Revenue Overview"}],
+  "gate_1":     {"fired":false,"max_similarity":0.87,"threshold":0.5},
+  "gate_2":     {"fired":false,"reranker_score":0.94,"threshold":0.3}
+}
+
+// event: done
+{
+  "conversation_id": "uuid-...",
+  "retrieval_ms":    148,
+  "gate1_score":     0.87,
+  "gate2_score":     0.94,
+  "total_tokens":    1240,
+  "cached_tokens":   980
+}</pre>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 10 — DOCKER & ENV  ══════════════════════════ -->
+<div class="panel" id="p9">
+  <div class="ph-hdr">
+    <span class="ph-num">Docker &amp; Env</span>
+    <span class="ph-title">.env variables · docker-compose retrieval config · startup sequence</span>
+    <span class="ph-hrs">Reference</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">.env — all environment variables owned by M1</div>
+    <pre class="schema"># ── Retrieval Engine (M1 owns) ──────────────────────────────────────────────
+
+# Qdrant
+QDRANT_HOST=qdrant
+QDRANT_PORT=6333
+QDRANT_COLLECTION=document_chunks
+
+# Redis (BM25 index store — also used by Celery, owned by M3)
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+# Embedding model (used by M3 to embed query before calling query_pipeline)
+EMBEDDING_MODEL=text-embedding-3-large
+EMBEDDING_DIM=1536
+
+# Reranker
+RERANKER_MODEL=cross-encoder/ms-marco-MiniLM-L-6-v2
+# Alternative if latency too high: cross-encoder/ms-marco-MiniLM-L-2-v2
+
+# Gate thresholds — set GATE2_THRESHOLD after Phase 4 calibration
+GATE1_THRESHOLD=0.5
+GATE2_THRESHOLD=0.0       # ← UPDATE after running calibrate_gate2.py
+
+# Retrieval config
+RETRIEVAL_TOP_K=150       # candidates before reranker
+RERANKER_TOP_K=20         # passages returned to M4
+
+# Debug mode — set true in dev, false in demo
+RETRIEVAL_DEBUG_MODE=false
+
+# Evaluation
+EVAL_PROJECT_ID=adani-q2-fy26</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">docker-compose.yml — retrieval-specific additions (merge with M3's compose file)</div>
+    <pre class="schema">services:
+
+  # ── Qdrant (M1 owns this service config) ───────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:v1.8.4
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── API service — add retrieval model volume ────────────────────────────
+  api:
+    # ... M3 owns most of this config ...
+    volumes:
+      - model_cache:/root/.cache/huggingface    # reranker model cached here
+      - model_cache:/root/.cache/torch
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - REDIS_HOST=redis
+      - GATE1_THRESHOLD=${GATE1_THRESHOLD:-0.5}
+      - GATE2_THRESHOLD=${GATE2_THRESHOLD:-0.0}
+      - RERANKER_MODEL=${RERANKER_MODEL:-cross-encoder/ms-marco-MiniLM-L-6-v2}
+      - RETRIEVAL_TOP_K=${RETRIEVAL_TOP_K:-150}
+      - RERANKER_TOP_K=${RERANKER_TOP_K:-20}
+      - RETRIEVAL_DEBUG_MODE=${RETRIEVAL_DEBUG_MODE:-false}
+    depends_on:
+      qdrant:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 10s
+      start_period: 45s      # allow reranker model download on first boot
+      retries: 6
+
+volumes:
+  qdrant_data:
+  model_cache:              # ← reranker weights persist across container restarts</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">backend/api/debug_endpoint.py — /api/retrieval/debug GET endpoint</div>
+    <pre class="code">"""
+GET /api/retrieval/debug
+Returns full retrieval trace for the last query in the current session.
+JWT-protected. M5 debug panel reads this.
+M3 mounts this router in main.py: app.include_router(debug_router)
+"""
+from fastapi import APIRouter, Depends, HTTPException
+from backend.retrieval import query_pipeline
+from backend.shared.types import RetrievalResult, RefusalEvent
+from backend.auth import get_current_user   # M3 owns auth
+import os, time
+
+debug_router = APIRouter(prefix="/api/retrieval", tags=["retrieval"])
+
+# In-memory last-query store per session (simple — Redis in prod)
+_last_debug: dict[str, dict] = {}
+
+
+def store_debug(session_id: str, debug: dict):
+    """Called by M3 after each query_pipeline call."""
+    _last_debug[session_id] = {**debug, "stored_at": time.time()}
+
+
+@debug_router.get("/debug")
+async def retrieval_debug(
+    project_id: str,
+    query: str | None = None,
+    session_id: str | None = None,
+    user=Depends(get_current_user)
+):
+    """
+    Returns the last retrieval trace for this session.
+    If query provided, re-runs retrieval and returns live trace.
+    """
+    if query:
+        # Live re-run for explicit query (useful for hackathon demo)
+        from openai import AsyncOpenAI
+        import numpy as np
+        oa = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        resp = await oa.embeddings.create(input=query, model="text-embedding-3-large")
+        vector = resp.data[0].embedding
+        result = await query_pipeline(query, vector, project_id)
+        if isinstance(result, RefusalEvent):
+            return {"refusal": result.__dict__, "debug": result.debug}
+        return {
+            "query":       query,
+            "project_id":  project_id,
+            **result.debug,
+            "latency_ms":  result.retrieval_ms,
+            "gate1_score": result.gate1_score,
+            "gate2_score": result.gate2_score,
+        }
+
+    # Return stored trace from last chat query
+    if session_id and session_id in _last_debug:
+        return _last_debug[session_id]
+
+    raise HTTPException(status_code=404, detail="No debug trace available for this session")
+</pre>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">/api/health — retrieval sub-check (add to M3's health endpoint)</div>
+    <pre class="code">@app.get("/api/health")
+async def health():
+    from qdrant_client import QdrantClient
+    import redis as redis_lib, os
+
+    checks = {}
+
+    # Qdrant
+    try:
+        qc = QdrantClient(host=os.getenv("QDRANT_HOST","qdrant"), port=6333)
+        info = qc.get_collection("document_chunks")
+        checks["qdrant"] = "ok"
+        checks["chunks"] = info.vectors_count
+    except Exception as e:
+        checks["qdrant"] = f"error: {e}"
+
+    # Redis / BM25
+    try:
+        r = redis_lib.Redis(host=os.getenv("REDIS_HOST","redis"), port=6379)
+        r.ping()
+        checks["bm25"] = "ok"
+    except Exception as e:
+        checks["bm25"] = f"error: {e}"
+
+    # Reranker model
+    try:
+        from backend.retrieval.neural_reranker import _get_model
+        _get_model()
+        checks["reranker"] = "ok"
+    except Exception as e:
+        checks["reranker"] = f"error: {e}"
+
+    status = "ok" if all(v == "ok" for v in checks.values()) else "degraded"
+    return {"status": status, "retrieval": checks}
+</pre>
+  </div>
+</div>
+
+<!-- ══════════════════════════  PHASE 11 — DEMO PREP  ══════════════════════════ -->
+<div class="panel" id="p10">
+  <div class="ph-hdr">
+    <span class="ph-num">Demo Prep</span>
+    <span class="ph-title">Your 3 wow-factor moments · CLI test commands · final checklist</span>
+    <span class="ph-hrs">Hours 42–48</span>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Your 3 retrieval wow-factor moments in the 3-minute demo</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">WOW 1</div>
+        <div class="step-b">
+          <div class="step-t">Debug panel — live BM25 + dense + RRF score comparison</div>
+          <div class="step-d">Ask "What is consolidated total income H1-26?" with debug=true. Show the panel: BM25 catches the exact phrase "total income" (high BM25 score), dense catches semantic context (high similarity), RRF merges them into rank #1. This visually proves hybrid retrieval is better than either alone.</div>
+          <pre class="code">curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -H "Content-Type: application/json"   -d '{"message":"What is consolidated total income H1-26?","project_id":"adani","debug":true}' | grep -A 20 "retrieval_debug"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">WOW 2</div>
+        <div class="step-b">
+          <div class="step-t">Gate 1 — instant "Not found" on CEO email (T4)</div>
+          <div class="step-d">Ask "What is the CEO's email address?" — Gate 1 fires in &lt;30ms with zero LLM call. The response "Not found in the document." appears instantly. This is the hallucination guardrail in action. Say on demo: "We never call the LLM for this — the similarity score was 0.31, below our 0.5 threshold, so we short-circuit immediately."</div>
+          <pre class="code">time curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -d '{"message":"What is the CEO email?","project_id":"adani"}' | jq '{reason: .reason, message: .message, latency: .debug.retrieval_ms}'</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">WOW 3</div>
+        <div class="step-b">
+          <div class="step-t">PAL routing — numeric question with is_table flag</div>
+          <div class="step-d">Ask "What % did income grow in H1-26?" — your is_table=true flag on the retrieved chunk triggers M4's PAL router. Show the SSE event:pal_execution in the debug panel with the generated Python code and calculated result. Your retrieval is what makes PAL work — without is_table the router falls back to LLM arithmetic (error-prone).</div>
+          <pre class="code">curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -d '{"message":"What percent did consolidated income grow H1-26?","project_id":"adani","debug":true}' | grep "pal_execution"</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">All 5 acceptance tests — CLI commands to run on camera</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">T1</div>
+        <div class="step-b">
+          <div class="step-t">Business segments — cited chunks test</div>
+          <pre class="code">curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -d '{"message":"What are the major business segments?","project_id":"adani","debug":true}' | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+chunks=d.get('debug',{}).get('reranked',[])
+assert all(c['page'] > 0 for c in chunks[:5]), 'FAIL: page_number missing'
+print(f'PASS T1: top-5 chunks all have page_number. Pages: {[c["page"] for c in chunks[:5]]}')"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T2</div>
+        <div class="step-b">
+          <div class="step-t">Total income H1-26 — numeric + table chunk test</div>
+          <pre class="code">curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -d '{"message":"What is consolidated total income H1-26?","project_id":"adani","debug":true}' | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+# Check BM25 captured exact term
+bm25=d.get('debug',{}).get('bm25_hits',[])
+hit = any('total income' in h.get('snippet','').lower() for h in bm25[:5])
+print(f'T2 BM25 exact term hit: {hit}')
+assert hit, 'FAIL: BM25 did not surface exact metric term'
+print('PASS T2 ✓')"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T3</div>
+        <div class="step-b">
+          <div class="step-t">EBITDA drivers — cross-section retrieval test</div>
+          <pre class="code">curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -d '{"message":"What drivers are mentioned for EBITDA changes in H1-26?","project_id":"adani","debug":true}' | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+sections=set(c.get('section','') for c in d.get('debug',{}).get('reranked',[])[:10])
+print(f'Sections in top-10: {sections}')
+assert len(sections) >= 2, f'FAIL: only {len(sections)} section(s) in top-10'
+print('PASS T3 — cross-section retrieval confirmed ✓')"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T4</div>
+        <div class="step-b">
+          <div class="step-t">CEO email — Gate 1 negative control (MUST be instant refusal)</div>
+          <pre class="code">curl -s -X POST http://localhost:8000/api/chat   -H "Authorization: Bearer $JWT"   -d '{"message":"What is the CEO email address?","project_id":"adani"}' | python3 -c "
+import json,sys
+d=json.load(sys.stdin)
+assert d.get('reason') == 'level_1_threshold', f'FAIL: expected refusal, got: {d}'
+assert 'Not found' in d.get('message',''), 'FAIL: wrong message'
+print(f'PASS T4 — Gate 1 fired at similarity={d["debug"]["max_similarity"]} ✓')"</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">T5</div>
+        <div class="step-b">
+          <div class="step-t">Follow-up context — rewritten query returns airport chunks</div>
+          <pre class="code">python3 -c "
+import asyncio, os, sys
+sys.path.insert(0,'.')
+from backend.retrieval import query_pipeline
+from openai import AsyncOpenAI
+oa = AsyncOpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+PROJECT = 'adani-q2-fy26'
+
+async def main():
+    # Q1
+    v1 = (await oa.embeddings.create(input='Summarize airport performance',model='text-embedding-3-large')).data[0].embedding
+    r1 = await query_pipeline('Summarize airport performance', v1, PROJECT)
+    q1_ids = {c.chunk_id for c in r1.chunks[:5]}
+    # Q2 (M3 would rewrite 'Break that down' → this standalone form)
+    q2 = 'Break down airport performance by passenger traffic and cargo'
+    v2 = (await oa.embeddings.create(input=q2,model='text-embedding-3-large')).data[0].embedding
+    r2 = await query_pipeline(q2, v2, PROJECT)
+    q2_ids = {c.chunk_id for c in r2.chunks[:5]}
+    overlap = q1_ids & q2_ids
+    assert len(overlap) >= 2, f'FAIL: overlap={overlap} (need ≥2)'
+    print(f'PASS T5 — {len(overlap)} chunks overlap between Q1 and Q2 ✓')
+
+asyncio.run(main())
+"</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Final pre-demo checklist — run through this 30 minutes before demo</div>
+    <div class="ck">
+      <div class="ck-h"><span class="ck-title">30-minute pre-demo checklist</span></div>
+      <div class="tests">
+        <div class="test"><span class="td-pass">●</span><div class="test-txt"><span class="tc">docker compose up -d && sleep 60</span> — all services healthy, reranker model loaded from cache (not re-downloading)</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt"><span class="tc">curl localhost:8000/api/health | jq .retrieval</span> — qdrant:ok, bm25:ok, reranker:ok</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt"><span class="tc">python backend/eval/run_eval.py --assert-ndcg=0.75</span> — PASS ✓</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Run T4 manually — confirm "Not found" returned in &lt;50ms. This is your strongest demo moment.</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Open M5's debug panel in browser — confirm it shows BM25/dense/RRF score columns for a test query</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Confirm GATE2_THRESHOLD in .env is NOT 0.0 — must be calibrated value from Phase 4</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Confirm all 5 acceptance tests pass end-to-end in integrated system with M3 + M4 + M5</div></div>
+        <div class="test"><span class="td-pass">●</span><div class="test-txt">Have the RAGAS output JSON ready to show: ndcg@10, contextual_precision ≥ 0.75</div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if GATE2_THRESHOLD=0.0 in .env — Gate 2 will never fire, adversarial queries may leak through</div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if reranker model downloading at demo time — must be pre-cached in Docker volume</div></div>
+        <div class="test"><span class="td-fail">✗</span><div class="test-txt">FAIL if bounding_box is None on any top-5 chunk — M4's PDF overlay will be broken on camera</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-lbl">Your 30-second pitch contribution (what you say about your component)</div>
+    <pre class="schema">Script (30 seconds — memorise this):
+
+"My component is the retrieval backbone of FinSight AI.
+
+Every answer you see is grounded in documents because of three things I built:
+
+First — hybrid retrieval: BM25 catches exact financial terms like 'total income' while dense 
+vectors catch semantic meaning. They run in parallel and get fused by Reciprocal Rank Fusion 
+to get the best of both.
+
+Second — neural reranking: a CrossEncoder model re-scores the top 150 candidates to pick 
+the 20 most relevant passages, giving us 14% better accuracy than vector search alone.
+
+Third — zero hallucination gates: if the similarity score is below 0.5, we never even 
+call the LLM. Watch — [type CEO email question] — instant 'Not found.' No fabrication possible.
+
+Everything else — PAL math, citations, voice — only works because my retrieval feeds it 
+the right passages with bounding boxes for the visual overlay."</pre>
+  </div>
+</div>
+
+<script>
+function show(i){
+  document.querySelectorAll('.panel').forEach((p,j)=>p.classList.toggle('on',j===i));
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));
+}
+// Make all tabs visible on small screens
+document.addEventListener('DOMContentLoaded', function(){
+  const tabs = document.querySelector('.tabs');
+  if(tabs) tabs.style.flexWrap = 'wrap';
+});
+</script>

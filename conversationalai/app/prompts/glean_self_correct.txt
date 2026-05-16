@@ -1,0 +1,12 @@
+The following answer was rejected because it violated compliance guidelines.
+
+ORIGINAL ANSWER:
+{draft}
+
+VIOLATIONS FOUND:
+{violations}
+
+RETRIEVED CONTEXT (you must stay within this):
+{context}
+
+Rewrite the answer to fix all violations while keeping it accurate and citing sources.

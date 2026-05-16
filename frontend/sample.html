@@ -1,0 +1,308 @@
+Page: FinSight AI Vibrant Glassmorphic Terminal
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinSight AI | Vibrant Document Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAFAFA;
+            background-image: radial-gradient(at 0% 0%, rgba(8, 145, 178, 0.05) 0, transparent 40%), radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.05) 0, transparent 40%), radial-gradient(at 100% 100%, rgba(244, 63, 94, 0.05) 0, transparent 40%), radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.05) 0, transparent 40%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(228, 231, 235, 1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(228, 231, 235, 0.9);
+        }
+
+        .chat-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .chat-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: rgba(15, 23, 42, 0.08);
+            border-radius: 10px;
+        }
+
+        .capacity-gradient {
+            background: linear-gradient(90deg, #0891B2 0%, #A855F7 50%, #10B981 100%);
+        }
+
+        .citation-badge {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .citation-badge:hover {
+            background-color: #10B981;
+            color: white;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="h-screen w-full flex overflow-hidden p-4 gap-4">
+        <aside class="w-72 glass-panel rounded-3xl flex flex-col shadow-sm">
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-10">
+                    <div class="w-11 h-11 bg-slate-800 rounded-xl flex items-center justify-center shadow-lg">
+                        <iconify-icon icon="lucide:layers" class="text-white text-2xl"></iconify-icon>
+                    </div> <span class="text-xl font-extrabold tracking-tight text-slate-800">FinSight<span
+                            class="text-[#10B981] font-semibold">AI</span></span>
+                </div>
+                <div class="space-y-6">
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 mb-3">Document
+                            Workspaces</p>
+                        <div class="space-y-1"> <a href="#" id="nav-p1-link"
+                                class="flex items-center gap-3 px-4 py-3 rounded-2xl bg-emerald-50 text-[#10B981] font-bold text-sm transition-all border border-emerald-100/50">
+                                <iconify-icon icon="lucide:folder-open" class="text-lg"></iconify-icon> Apple Q3 10-Q
+                            </a> <a href="#" id="nav-p2-link"
+                                class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-500 font-medium text-sm hover:bg-slate-50 hover:text-slate-700 transition-all">
+                                <iconify-icon icon="lucide:folder" class="text-lg"></iconify-icon> NVIDIA Audit </a>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 mb-3">Navigation
+                        </p>
+                        <div class="space-y-1"> <a href="#" id="nav-docs-link"
+                                class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-500 font-semibold text-sm hover:bg-purple-50 hover:text-[#A855F7] transition-all group">
+                                <iconify-icon icon="lucide:files"
+                                    class="text-lg text-slate-400 group-hover:text-[#A855F7]"></iconify-icon> Documents
+                            </a> <a href="#" id="nav-analytics-link"
+                                class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-500 font-semibold text-sm hover:bg-cyan-50 hover:text-[#0891B2] transition-all group">
+                                <iconify-icon icon="lucide:bar-chart-big"
+                                    class="text-lg text-slate-400 group-hover:text-[#0891B2]"></iconify-icon> Analytics
+                            </a> <a href="#" id="nav-settings-link"
+                                class="flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-500 font-semibold text-sm hover:bg-rose-50 hover:text-[#F43F5E] transition-all group">
+                                <iconify-icon icon="lucide:settings-2"
+                                    class="text-lg text-slate-400 group-hover:text-[#F43F5E]"></iconify-icon> Settings
+                            </a> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1"></div>
+            <div class="p-4 mt-auto">
+                <div class="glass-card rounded-2xl p-4 mb-4 border-slate-200/40 shadow-sm">
+                    <div class="flex justify-between items-center mb-2.5">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Global Capacity</p>
+                        <span class="text-[10px] font-bold text-[#10B981]">75%</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div class="w-3/4 h-full capacity-gradient shadow-[0_0_12px_rgba(168,85,247,0.2)]"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-2 font-medium">750 / 1000 Premium Pages</p>
+                </div> <button id="cta-upload-btn"
+                    class="w-full flex items-center justify-center gap-2 py-3.5 bg-slate-800 text-white rounded-2xl text-sm font-bold hover:bg-slate-900 transition-all shadow-md active:scale-[0.98]">
+                    <iconify-icon icon="lucide:upload-cloud" class="text-lg"></iconify-icon> Ingest Document </button>
+            </div>
+        </aside>
+        <main class="flex-1 flex flex-col gap-4">
+            <header class="glass-panel h-16 rounded-2xl flex items-center justify-between px-6 shadow-sm">
+                <div class="flex items-center gap-5"> <span
+                        class="flex items-center gap-2 text-[11px] font-bold text-[#10B981] bg-emerald-50 border border-emerald-100 px-4 py-1.5 rounded-full shadow-sm">
+                        <iconify-icon icon="lucide:shield-check"></iconify-icon> Verified Multi-Source v2.5 </span>
+                    <span class="text-xs text-slate-400 border-l border-slate-200 pl-5 font-medium">Context: <span
+                            class="text-slate-600">Enterprise_Archive.zip</span></span>
+                </div>
+                <div class="flex items-center gap-3"> <button id="header-export-btn"
+                        class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-purple-50 hover:text-[#A855F7] transition-all border border-transparent hover:border-purple-200">
+                        <iconify-icon icon="lucide:file-down" class="text-lg"></iconify-icon> </button> <button
+                        id="header-analytics-btn"
+                        class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-cyan-50 hover:text-[#0891B2] transition-all border border-transparent hover:border-cyan-200">
+                        <iconify-icon icon="lucide:activity" class="text-lg"></iconify-icon> </button> <button
+                        id="header-settings-btn"
+                        class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-rose-50 hover:text-[#F43F5E] transition-all border border-transparent hover:border-rose-200">
+                        <iconify-icon icon="lucide:sliders-horizontal" class="text-lg"></iconify-icon> </button> </div>
+            </header>
+            <div class="flex-1 glass-panel rounded-[32px] flex flex-col overflow-hidden shadow-sm">
+                <div class="flex-1 overflow-y-auto chat-scroll p-10 space-y-10">
+                    <div class="max-w-2xl ml-auto">
+                        <div class="bg-slate-800 text-white p-5 rounded-3xl rounded-tr-none shadow-md">
+                            <p class="text-[15px] leading-relaxed font-medium">Generate an audit summary of the recent
+                                document ingestion. Focus on data integrity and anomaly detection.</p>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-2.5 text-right font-bold tracking-wider">AUDIT REQUEST
+                            // 15:45:12</p>
+                    </div>
+                    <div class="max-w-4xl mr-auto">
+                        <div class="flex gap-5 items-start">
+                            <div
+                                class="w-10 h-10 bg-white border border-slate-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                                <iconify-icon icon="lucide:sparkles" class="text-[#10B981] text-2xl"></iconify-icon>
+                            </div>
+                            <div class="space-y-6 flex-1">
+                                <div class="glass-card p-8 rounded-3xl rounded-tl-none border-slate-200/60">
+                                    <p class="text-[15px] text-slate-700 leading-relaxed mb-6"> I have completed the
+                                        cross-referenced audit for the <strong>Apple Q3 Filing</strong>. Below is the
+                                        multi-dimensional analysis focusing on retrieval confidence and structural data
+                                        flags. </p>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                                        <div
+                                            class="bg-white border-b-4 border-cyan-500 p-5 rounded-2xl shadow-sm group hover:scale-[1.02] transition-transform">
+                                            <div class="flex items-center gap-2 mb-3"> <iconify-icon
+                                                    icon="lucide:line-chart" class="text-[#0891B2]"></iconify-icon>
+                                                <p
+                                                    class="text-[10px] font-extrabold text-[#0891B2] uppercase tracking-widest">
+                                                    Analytics Health</p>
+                                            </div>
+                                            <div class="text-2xl font-black text-slate-800">98.4%</div>
+                                            <p class="text-[10px] text-slate-400 mt-1">Data Precision Score</p>
+                                        </div>
+                                        <div
+                                            class="bg-white border-b-4 border-purple-500 p-5 rounded-2xl shadow-sm group hover:scale-[1.02] transition-transform">
+                                            <div class="flex items-center gap-2 mb-3"> <iconify-icon
+                                                    icon="lucide:layers-2" class="text-[#A855F7]"></iconify-icon>
+                                                <p
+                                                    class="text-[10px] font-extrabold text-[#A855F7] uppercase tracking-widest">
+                                                    Doc Stats</p>
+                                            </div>
+                                            <div class="text-2xl font-black text-slate-800">412</div>
+                                            <p class="text-[10px] text-slate-400 mt-1">Citations Indexed</p>
+                                        </div>
+                                        <div
+                                            class="bg-white border-b-4 border-rose-500 p-5 rounded-2xl shadow-sm group hover:scale-[1.02] transition-transform">
+                                            <div class="flex items-center gap-2 mb-3"> <iconify-icon
+                                                    icon="lucide:alert-octagon" class="text-[#F43F5E]"></iconify-icon>
+                                                <p
+                                                    class="text-[10px] font-extrabold text-[#F43F5E] uppercase tracking-widest">
+                                                    Audit Flags</p>
+                                            </div>
+                                            <div class="text-2xl font-black text-slate-800">03</div>
+                                            <p class="text-[10px] text-slate-400 mt-1">Anomalies Detected</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-[15px] text-slate-600 leading-relaxed"> While core revenue metrics
+                                        are consistent with prior guidance, I identified three <strong>variance
+                                            flags</strong> in the emerging market expenditure notes (Page 42) that
+                                        require manual human verification <a href="#ref-docs-link" id="cite-purple"
+                                            class="citation-badge inline-flex items-center justify-center w-5 h-5 rounded-lg bg-purple-50 text-[10px] font-extrabold text-[#A855F7] ml-1.5 border border-purple-100">3</a>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 border-t border-slate-100 bg-white/40 backdrop-blur-md">
+                    <div class="relative flex items-center group"> <input type="text"
+                            placeholder="Analyze financial data from grounded sources..."
+                            class="w-full bg-white border border-slate-200 py-4.5 px-8 pr-40 rounded-3xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-emerald-500/5 focus:border-[#10B981] transition-all placeholder:text-slate-400 shadow-sm">
+                        <div class="absolute right-3.5 flex items-center gap-2"> <button id="voice-btn"
+                                class="p-2.5 rounded-2xl text-slate-400 hover:bg-slate-100 transition-all">
+                                <iconify-icon icon="lucide:mic" class="text-xl"></iconify-icon> </button> <button
+                                id="send-btn"
+                                class="bg-[#10B981] text-white px-7 py-3 rounded-2xl text-xs font-black uppercase tracking-wider hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-100 active:scale-[0.98]">
+                                Analyze </button> </div>
+                    </div>
+                    <div class="flex items-center justify-between mt-4 px-2">
+                        <div class="flex items-center gap-6">
+                            <div class="flex items-center gap-2"> <iconify-icon icon="lucide:check-circle-2"
+                                    class="text-[#10B981]"></iconify-icon> <span
+                                    class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Success
+                                    State</span> </div>
+                            <div class="flex items-center gap-2"> <iconify-icon icon="lucide:pie-chart"
+                                    class="text-[#0891B2]"></iconify-icon> <span
+                                    class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Analytics
+                                    Ready</span> </div>
+                            <div class="flex items-center gap-2"> <iconify-icon icon="lucide:folder-sync"
+                                    class="text-[#A855F7]"></iconify-icon> <span
+                                    class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">Documents
+                                    Synced</span> </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">
+                            <iconify-icon icon="lucide:shield-alert" class="text-[#F43F5E] text-sm"></iconify-icon>
+                            <span class="text-[9px] font-extrabold text-[#F43F5E] uppercase tracking-wider">Enhanced
+                                Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <aside class="w-96 glass-panel rounded-[32px] flex flex-col shadow-sm">
+            <div class="p-7 border-b border-slate-100">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-extrabold text-slate-800 uppercase tracking-wider">Evidence Hub</h2>
+                    <div class="flex gap-1.5">
+                        <div class="w-2 h-2 rounded-full bg-[#0891B2]"></div>
+                        <div class="w-2 h-2 rounded-full bg-[#A855F7]"></div>
+                        <div class="w-2 h-2 rounded-full bg-[#F43F5E]"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 overflow-y-auto chat-scroll p-7 space-y-7">
+                <div id="ref-01-card" class="group">
+                    <div class="flex items-center justify-between mb-3"> <span
+                            class="text-[10px] font-black bg-[#A855F7] text-white px-3 py-1 rounded-lg shadow-sm shadow-purple-200">DOCS
+                            // 03</span> <span class="text-[10px] font-bold text-slate-400 uppercase">Page 42 //
+                            Variance</span> </div>
+                    <div
+                        class="glass-card p-5 rounded-2xl border-purple-100 hover:border-[#A855F7] transition-all cursor-pointer hover:bg-purple-50/10">
+                        <p class="text-xs text-slate-600 leading-relaxed italic font-medium"> "Expenditure variance of
+                            4.2% in EMEA markets represents a temporary alignment phase resulting from regulatory
+                            infrastructure shifts..." </p>
+                    </div>
+                </div>
+                <div
+                    class="p-6 rounded-[24px] bg-slate-50/50 border border-dashed border-slate-200 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-100/20 rounded-full -mr-16 -mt-16 blur-3xl">
+                    </div>
+                    <p
+                        class="text-[11px] font-black text-slate-800 uppercase tracking-widest mb-4 flex items-center gap-2">
+                        <iconify-icon icon="lucide:bar-chart" class="text-[#0891B2]"></iconify-icon> Verification
+                        Metrics
+                    </p>
+                    <div class="space-y-3.5 relative z-10">
+                        <div class="flex justify-between text-[11px] font-medium"> <span
+                                class="text-slate-500">Analytics Accuracy</span> <span
+                                class="font-bold text-[#0891B2]">0.9994</span> </div>
+                        <div class="flex justify-between text-[11px] font-medium"> <span class="text-slate-500">Document
+                                Integrity</span> <span class="font-extrabold text-[#A855F7]">CERTIFIED</span> </div>
+                        <div class="flex justify-between text-[11px] font-medium"> <span class="text-slate-500">Alert
+                                Threshold</span> <span class="font-bold text-[#F43F5E]">LOW RISK</span> </div>
+                    </div>
+                    <div class="mt-5 pt-5 border-t border-slate-200">
+                        <div class="flex items-start gap-2 text-[#F43F5E]"> <iconify-icon icon="lucide:info"
+                                class="mt-0.5"></iconify-icon>
+                            <p class="text-[10px] leading-tight font-bold uppercase tracking-tight">Anomaly detected in
+                                sub-segment J-4: Purple flag raised for documentation mismatch.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-5 border-t border-slate-100 flex gap-2"> <button id="full-doc-btn"
+                    class="flex-1 py-4 bg-white border border-slate-200 text-[#A855F7] rounded-2xl text-[10px] font-black uppercase tracking-wider hover:bg-purple-50 transition-all border-b-2 border-b-purple-100">
+                    Full Document </button> <button id="analytics-view-btn"
+                    class="flex-1 py-4 bg-white border border-slate-200 text-[#0891B2] rounded-2xl text-[10px] font-black uppercase tracking-wider hover:bg-cyan-50 transition-all border-b-2 border-b-cyan-100">
+                    Analytics Tab </button> </div>
+        </aside>
+    </div>
+</body>
+
+</html>
+```
+
+Please reference this design and implement it into our codebase; Try to understand the structure, which part of our
+codebase is relevant and implement

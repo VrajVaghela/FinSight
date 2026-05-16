@@ -1,0 +1,20 @@
+[project]
+name = "finsight"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi",
+  "google-genai",
+  "openai",
+  "qdrant-client",
+  "rank-bm25",
+  "ranx",
+  "redis",
+  "sentence-transformers",
+  "uvicorn[standard]",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests", "backend/tests"]
+addopts = []

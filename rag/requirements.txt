@@ -1,0 +1,9 @@
+fastapi
+google-genai
+openai
+qdrant-client
+rank-bm25
+ranx
+redis
+sentence-transformers
+uvicorn[standard]

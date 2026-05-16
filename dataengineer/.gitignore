@@ -1,0 +1,35 @@
+# Environment variables (CRITICAL: Never commit your API keys!)
+.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Data and Uploads (Do not commit large PDFs or vector/BM25 indexes)
+data/uploads/
+data/bm25_indexes/
+data/images/
+
+# Logs
+*.log
+celery_debug.log
+
+# IDE / OS Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Qdrant / DB Local Storage (if mapped locally)
+qdrant_storage/
+postgres_data/
+redis_data/

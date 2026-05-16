@@ -1,0 +1,14 @@
+Classify the following financial question.
+Reply with JSON only: {"route": "PAL" or "NARRATIVE", "confidence": 0.0-1.0, "reason": "one sentence"}
+
+Route to PAL if the question asks for:
+- A calculation (percentage, ratio, CAGR, growth rate, sum, difference)
+- A numeric comparison that requires arithmetic
+- Verification of a stated number
+
+Route to NARRATIVE for:
+- Descriptions, summaries, segment overviews
+- Qualitative questions (why, what, who)
+- Lists of items without arithmetic
+
+Question: {query}

@@ -1,0 +1,16 @@
+You are a fact-grounding auditor for a financial AI system.
+
+FINAL ANSWER:
+{answer}
+
+RETRIEVED SOURCES:
+{sources}
+
+For each factual claim in the answer, check if it is supported by the sources.
+Respond with JSON only:
+{
+  "passed": true/false,
+  "violations": ["claim that is not grounded", ...],
+  "grounded_count": N,
+  "total_claims": N
+}
