@@ -242,3 +242,9 @@ FinSight AI employs a **Hybrid Execution Model** optimized for rapid development
     *   Frontend UI: [http://localhost:3000](http://localhost:3000)
     *   Backend API Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
     *   Qdrant Dashboard: [http://localhost:6333/dashboard](http://localhost:6333/dashboard)
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE). Copyright (c) 2026 Vraj Vaghela.
