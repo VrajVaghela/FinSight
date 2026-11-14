@@ -14,3 +14,8 @@ node_modules/
 .next/
 dist/
 build/
+
+# Runtime and test logs
+*.log
+*_log.txt
+*_log_*.txt
